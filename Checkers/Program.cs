@@ -9,7 +9,7 @@ namespace Checkers
     {
         public static void Main()
         {
-            System.Console.WriteLine("hey daniel !");
+            System.Console.WriteLine("wassup");
         }
     }
 }
