@@ -32,7 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Board.cs" />
+    <Compile Include="GameManagement.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Tool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
