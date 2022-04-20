@@ -7,6 +7,6 @@ namespace Checkers
 {
     class Menu
     {
-        
+       
     }
 }

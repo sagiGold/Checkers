@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Checkers
 {
     public class Board
     {
+        private readonly GameTool[,] m_GameBoard;
+        private int m_Height;
+        private int m_Width;
+        private const GameTool Empty = null;
+       
         public enum eBoradSize
         {
             Small = 6,
@@ -14,18 +19,15 @@ namespace Checkers
             Large = 10
         }
 
-        private readonly char[,] m_GameBoard;
-        private int m_Height;
-        private int m_Width;
-
         public Board(int height, int width)
         {
             m_Height = height;
             m_Width = width;
-            m_GameBoard = new char[height, width];
+            m_GameBoard = new GameTool[height, width];
+            initializeBufferZone();
         }
 
-        public char this[int i_Row, int i_Colum]
+        public GameTool this[int i_Row, int i_Colum]
         {
             get
             {
@@ -64,5 +66,102 @@ namespace Checkers
             }
         }
 
+        private void initializeBufferZone()
+        {
+            int startLoopIndex = (m_Height / 2) - 1;
+            int endLoopIndex = (m_Height / 2) + 1;
+
+            for (int i = startLoopIndex; i < endLoopIndex; i++)
+            {
+                for (int j = 0; j < m_Width; j++)
+                {
+                    m_GameBoard[i, j] = Empty;
+                }
+            }
+        }
+
+        public void InitializePlayerTools(Player i_PlayerO, Player i_PlayerX)
+        {
+            int startLoopValue, endLoopValue;
+
+            startLoopValue = 0;
+            endLoopValue = m_Height / 2;
+
+            for (int i = startLoopValue; i < endLoopValue; i++)
+            {
+                for (int j = 0; j < m_Width; j++)
+                {
+                    if ((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0))
+                    {
+                        m_GameBoard[i, j] = i_Player.ToolShape;
+                        i_Player.PlayerTools.Add(new GameTool(new Point(i, j), m_GameBoard[i, j]));
+                    }
+                    else
+                    {
+                        m_GameBoard[i, j] = (char)GameTool.eSigns.Empty;
+                    }
+                }
+            }
+        }
+
+        public void UpdateMoveOnBoard(Move i_Move, GameTool i_GameToolToMove)
+        {
+            char tempSign = i_GameToolToMove.Sign;
+
+            DeleteFromBoard(i_Move.From);
+            if (transferToKing(i_Move.To, i_GameToolToMove))
+            {
+                i_GameToolToMove.Sign = i_GameToolToMove.FriendSign;
+                i_GameToolToMove.FriendSign = tempSign;
+            }
+
+            addToBoard(i_Move.To, i_GameToolToMove.Sign);
+        }
+
+        private bool transferToKing(Point i_Location, GameTool i_GameToolToMove)
+        {
+            bool result = false;
+
+            if ((i_Location.X == Height - 1 || i_Location.X == 0) && !i_GameToolToMove.IsKing())
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        private void addToBoard(Point i_PointToAdd, char i_Sign)
+        {
+            m_GameBoard[i_PointToAdd.X, i_PointToAdd.Y] = i_Sign;
+        }
+
+        public void DeleteFromBoard(Point i_PointToErase)
+        {
+            m_GameBoard[i_PointToErase.X, i_PointToErase.Y] = (char)GameTool.eSigns.Empty;
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    this[i, j] = (char)GameTool.eSigns.Empty;
+                }
+            }
+        }
+
+        public static bool validSize(string i_BoardSize, out int o_ValidBoardSize)
+        {
+            bool isNumeric = false;
+
+            isNumeric = int.TryParse(i_BoardSize, out o_ValidBoardSize);
+            return isNumeric && legalSize(o_ValidBoardSize);
+        }
+
+        public static bool legalSize(int i_ValidSize)
+        {
+            return i_ValidSize == (int)Board.eBoradSize.Small || i_ValidSize == (int)Board.eBoradSize.Medium || i_ValidSize == (int)Board.eBoradSize.Large;
+        }
     }
 }

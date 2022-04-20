@@ -7,5 +7,6 @@ namespace Checkers
 {
     class GameManagement
     {
+        Board m_Board;
     }
 }

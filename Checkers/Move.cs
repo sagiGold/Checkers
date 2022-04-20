@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Checkers
 {
-    class Tool
+    class Move
     {
     }
 }
