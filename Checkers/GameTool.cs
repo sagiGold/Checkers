@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-﻿using System.Drawing;
-using System.Collections.Generic;
-=======
-﻿using System.Collections.Generic;
 using System.Drawing;
->>>>>>> Stashed changes
+using System.Collections.Generic;
 
 namespace Checkers
 {
