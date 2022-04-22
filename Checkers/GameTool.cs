@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
 ﻿using System.Drawing;
-using System.Collections.Generic;
-=======
 ﻿using System.Collections.Generic;
-using System.Drawing;
->>>>>>> Stashed changes
 
-namespace Checkers
+﻿namespace Checkers
 {
     public class GameTool
     {
@@ -62,8 +57,8 @@ namespace Checkers
             }
 
             set
-            { 
-                m_TeamSign = value;
+            {
+                m_Location = value;
             }
         }
 
@@ -136,7 +131,7 @@ namespace Checkers
 
         private bool checkIfOpponentInNextSquare(Point i_AfterMove, Board i_GameBoard)
         {
-            return i_GameBoard.IsPointInBoard(i_AfterMove) && i_GameBoard.IsOpponentInSquare(i_AfterMove);
+            return i_GameBoard.IsPointInBoard(i_AfterMove) && i_GameBoard.IsOpponentInSquare(i_AfterMove, m_TeamSign);
         }
 
         public void CheckOppurturnitiToEat(Board i_GameBoard, List<Move> i_PlayerValidMoves)
@@ -155,6 +150,7 @@ namespace Checkers
         {
             Point opponentSquare = new Point(m_Location.X + (int)eDirection.Left, m_Location.Y + (int)i_ToolDirection);
             Point newPoint = new Point(opponentSquare.X + (int)eDirection.Left, opponentSquare.Y + (int)i_ToolDirection);
+
             if (checkIfOpponentInNextSquare(opponentSquare, i_GameBoard) && checkIfValidMove(newPoint, i_GameBoard))
             {
                 io_PlayerValidMoves.Add(new Move(m_Location, newPoint));

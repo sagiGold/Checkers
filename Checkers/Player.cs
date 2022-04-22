@@ -16,7 +16,7 @@ namespace Checkers
         }
 
         private int m_Score = 0;
-        private char m_ToolShape;
+        private GameTool.eTeamSign m_Team;
         private string m_Name;
         private string m_LastMove;
         private ePLayerType m_PlayerType;
@@ -36,18 +36,19 @@ namespace Checkers
             }
         }
 
-        public char ToolShape
+        public GameTool.eTeamSign Team
         {
             get
             {
-                return m_ToolShape;
+                return m_Team;
             }
 
             set
             {
-                m_ToolShape = value;
+                m_Team = value;
             }
         }
+
         public string Name
         {
             get
