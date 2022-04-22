@@ -92,14 +92,14 @@
             }
         }*/
 
-        private eDirection getToolDirection()
+        public eDirection GetToolDirection()
         {
             return m_TeamSign == eTeamSign.PlayerX ? eDirection.Up : eDirection.Down;
         }
 
         public void AddValidMovesForTool(Board i_GameBoard, List<Move> io_PlayerValidMoves)
         {
-            eDirection toolDirection = getToolDirection();
+            eDirection toolDirection = GetToolDirection();
 
             addOneDirectionValidMoves(i_GameBoard, io_PlayerValidMoves, toolDirection);
             if (IsKing())
@@ -136,7 +136,7 @@
 
         public void CheckOppurturnitiToEat(Board i_GameBoard, List<Move> i_PlayerValidMoves)
         {
-            eDirection toolDirection = getToolDirection();
+            eDirection toolDirection = GetToolDirection();
 
             addOneDirectionValidEatMoves(i_GameBoard, i_PlayerValidMoves, toolDirection);
             if (IsKing())

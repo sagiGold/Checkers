@@ -15,13 +15,20 @@ namespace Checkers
             Human,
         }
 
-        private int m_Score = 0;
         private GameTool.eTeamSign m_Team;
         private string m_Name;
-        private string m_LastMove;
+        private string m_LastMove = null;
         private ePLayerType m_PlayerType;
         private List<GameTool> m_PlayerTools = new List<GameTool>();
         private List<Move> m_ValidMovesList = new List<Move>();
+        private int m_Score = 0;
+
+        public Player(string i_PlayerName, GameTool.eTeamSign i_Team)
+        {
+            m_Name = i_PlayerName;
+            m_Team = i_Team;
+            m_PlayerType = i_PlayerName == "Computer" ? ePLayerType.Computer : ePLayerType.Human;
+        }
 
         public int Score
         {

@@ -16,13 +16,12 @@ namespace Checkers
             Large = 10,
         }
 
-        public Board(int height, int width)
+        public Board(int height, int width, Player io_PlayerOne, Player io_PlayerTwo)
         {
             m_Height = height;
             m_Width = width;
             m_GameBoard = new GameTool[height, width];
-            initializeBufferZone();
-
+            InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
         }
 
         public GameTool this[int i_Row, int i_Colum]
@@ -88,11 +87,11 @@ namespace Checkers
         {
             int startLine = 0;
             int endLine = (m_Height / 2) - 1;
-            arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
+            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
 
             startLine = (m_Height / 2) + 1;
             endLine = m_Height;
-            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
+            arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
         }
 
         private void arrangePlayerToolsOnBoard(Player io_Player, int i_StartLine, int i_EndLine)
@@ -125,16 +124,11 @@ namespace Checkers
             m_GameBoard[i_ToolLocation.Y, i_ToolLocation.X] = k_Empty;
         }
 
-        private bool transferToKing(Point i_Location, GameTool i_GameToolToMove)        // dont think it should be here
+        public bool ToolInEndLine(GameTool i_Tool)
         {
-            bool result = false;
+            int endLine = i_Tool.GetToolDirection() == GameTool.eDirection.Up ? 0 : m_Height - 1;
 
-            if ((i_Location.X == Height - 1 || i_Location.X == 0) && !i_GameToolToMove.IsKing())
-            {
-                result = true;
-            }
-
-            return result;
+            return i_Tool.Location.Y == endLine;
         }
 
         public bool IsPointInBoard(Point i_SquareLocation)
