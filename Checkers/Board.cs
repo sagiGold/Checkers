@@ -16,11 +16,11 @@ namespace Checkers
             Large = 10,
         }
 
-        public Board(int height, int width, Player io_PlayerOne, Player io_PlayerTwo)
+        public Board(int i_BoardSize, Player io_PlayerOne, Player io_PlayerTwo)
         {
-            m_Height = height;
-            m_Width = width;
-            m_GameBoard = new GameTool[height, width];
+            m_Height = i_BoardSize;
+            m_Width = i_BoardSize;
+            m_GameBoard = new GameTool[i_BoardSize, i_BoardSize];
             InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
         }
 
