@@ -11,7 +11,7 @@ namespace Checkers
 
         public enum ePLayerType
         {
-            Computer,
+            Computer = 1,
             Human,
         }
 
@@ -126,6 +126,14 @@ namespace Checkers
             bool nameContainSpaces = i_UserName.Contains(" ");
 
             return i_UserName.Length <= m_MaxUserNameSize && !nameContainSpaces;
+        }
+
+        public static bool LegalPlayerType(string i_UserType, out ePLayerType o_PlayerType)
+        {
+            bool isPlayerType = false;
+
+            isPlayerType = ePLayerType.TryParse(i_UserType, out o_PlayerType);
+            return isPlayerType;
         }
     }
 }

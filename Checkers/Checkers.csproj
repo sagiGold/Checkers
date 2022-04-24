@@ -36,7 +36,7 @@
     <Compile Include="Board.cs" />
     <Compile Include="GameManagement.cs" />
     <Compile Include="GameTool.cs" />
-    <Compile Include="Menu.cs" />
+    <Compile Include="GameMessages.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

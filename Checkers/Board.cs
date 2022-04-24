@@ -16,12 +16,19 @@ namespace Checkers
             Large = 10,
         }
 
-        public Board(int i_BoardSize, Player io_PlayerOne, Player io_PlayerTwo)
+        //public Board(int i_BoardSize, Player io_PlayerOne, Player io_PlayerTwo)
+        //{
+        //    m_Height = i_BoardSize;
+        //    m_Width = i_BoardSize;
+        //    m_GameBoard = new GameTool[i_BoardSize, i_BoardSize];
+        //    InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
+        //}
+
+        public Board(int i_BoardSize)
         {
             m_Height = i_BoardSize;
             m_Width = i_BoardSize;
             m_GameBoard = new GameTool[i_BoardSize, i_BoardSize];
-            InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
         }
 
         public GameTool this[int i_Row, int i_Colum]
@@ -146,16 +153,16 @@ namespace Checkers
             return !IsSquareEmpty(i_SquareLocation) && m_GameBoard[i_SquareLocation.Y, i_SquareLocation.X].Sign != i_ToolTeam;
         }
 
-        public void Clear()         /// Dont know if we need it
-        {
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                {
-                    this[i, j] = k_Empty;
-                }
-            }
-        }
+        //public void Clear()/// Dont know if we need it
+        //{
+        //    for (int i = 0; i < Height; i++)
+        //    {
+        //        for (int j = 0; j < Width; j++)
+        //        {
+        //            this[i, j] = k_Empty;
+        //        }
+        //    }
+        //}
 
         public static bool ValidSize(string i_BoardSize, out int o_ValidBoardSize)
         {
@@ -165,7 +172,7 @@ namespace Checkers
             return isNumeric && legalSize(o_ValidBoardSize);
         }
 
-        public static bool legalSize(int i_ValidSize)
+        private static bool legalSize(int i_ValidSize)
         {
             return i_ValidSize == (int)eBoardSize.Small || i_ValidSize == (int)eBoardSize.Medium || i_ValidSize == (int)eBoardSize.Large;
         }
