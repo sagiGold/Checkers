@@ -9,7 +9,9 @@ namespace Checkers
     {
         public static void Main()
         {
-            System.Console.WriteLine("wassup");
+            GameManagement game = new GameManagement(6, "Sagi", "Daniel");
+            //game.Run();
+
         }
     }
 }
