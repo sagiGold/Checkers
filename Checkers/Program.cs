@@ -9,7 +9,7 @@ namespace Checkers
     {
         public static void Main()
         {
-            Game game = new Game(6, "Sagi", "Daniel");
+            Game game = new Game();
             //game.Run();
 
         }

@@ -11,7 +11,7 @@ namespace Checkers
         {
             return "HELLO AND WELCOME, YOU ARE GOING TO PLAY CHECKERS, ENJOY!";
         }
-
+        
         public static string NameMsg()
         {
             return "Please enter your nickname (until 20 characters without spaces):";

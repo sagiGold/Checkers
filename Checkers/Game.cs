@@ -7,14 +7,19 @@ namespace Checkers
 {
     public class Game
     {
-        Board m_Board = null;
+        Board m_Board = new Board(Board.eBoardSize.Medium);
         Player m_PlayerOne = null;
         Player m_PlayerTwo = null;
+        bool m_IsPlayerOneTurn = true;
+
+        public Game()
+        {
+        }
 
         //public GameManagement(int i_BoardSize, string i_PlayerOneName, string i_PlayerTwoName)
         //{
-        //    m_PlayerOne = new Player(i_PlayerOneName, GameTool.eTeamSign.PlayerX);
-        //    m_PlayerTwo = new Player(i_PlayerTwoName, GameTool.eTeamSign.PlayerO);
+        //    m_PlayerOne = new Player(i_PlayerOneName, GameTool.eToolSign.PlayerX);
+        //    m_PlayerTwo = new Player(i_PlayerTwoName, GameTool.eToolSign.PlayerO);
         //    m_Board = new Board(i_BoardSize, m_PlayerOne, m_PlayerTwo);
         //}
 
@@ -47,10 +52,10 @@ namespace Checkers
 
         public bool InitBoard(string i_Size)
         {
-            int size;
+            Board.eBoardSize size;
             bool updated = false;
 
-            if (updated = Board.ValidSize(i_Size, out size))
+            if (updated = Player.ePLayerType.TryParse(i_Size, out size))
             {
                 m_Board = new Board(size);
             }
@@ -58,17 +63,52 @@ namespace Checkers
             return updated;
         }
 
-        public bool OpponentId(string i_NumOfPlayerType, out string o_PlayerType )
+        public bool OpponentId(string i_NumOfPlayerType, ref string io_PlayerType )
         {
             Player.ePLayerType humanOrComputer;
+            bool updated = false;
 
-
-            if (Player.ePLayerType.TryParse(i_NumOfPlayerType, out humanOrComputer))
+            if (updated = Player.ePLayerType.TryParse(i_NumOfPlayerType, out humanOrComputer))
             {
-                o_PlayerType = humanOrComputer == Player.ePLayerType.Human ? "Human" : "Computer";
+                io_PlayerType = humanOrComputer == Player.ePLayerType.Human ? "Human" : "Computer";
             }
 
-            return ;
-        }    
+            return updated;
+        }
+
+        public bool PlayerTurn(Move i_CurrentMove)
+        {
+            Player currentPlayer = m_IsPlayerOneTurn ? m_PlayerOne : m_PlayerTwo;
+            Player nextPlayer = m_IsPlayerOneTurn ? m_PlayerTwo : m_PlayerOne;
+            bool playerPlayed = false;
+
+            if (playerPlayed = i_CurrentMove.IsAvailabeMove(currentPlayer))
+            {
+                i_CurrentMove.MakeMove(m_Board, nextPlayer.PlayerTools, currentPlayer.ValidMoves);
+            }
+
+            return playerPlayed;
+        }
+
+        public void BulidValidMoveListForPlayer()
+        {
+            Player currentPlayer = m_IsPlayerOneTurn ? m_PlayerOne : m_PlayerTwo;
+
+            currentPlayer.ValidMoves.Clear();
+            foreach (GameTool tool in currentPlayer.PlayerTools)
+            {
+                tool.CheckOppurturnitiToEat(m_Board, currentPlayer.ValidMoves);
+            }
+
+            if (currentPlayer.ValidMoves.Count == 0) // Only if there is no piece to eat
+            {
+                foreach (GameTool tool in currentPlayer.PlayerTools)
+                {
+                    tool.AddValidMovesForTool(m_Board, currentPlayer.ValidMoves);
+                }
+            }
+        }
+
+        // make function of initial the board and the lists of tools and lasts Move 
     }
 }

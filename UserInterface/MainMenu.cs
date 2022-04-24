@@ -8,7 +8,7 @@ namespace UserInterface
 {
     public class MainMenu
     {
-        public static void GetPreGameDate(Game io_Game)
+        public static void GetPreGameData(Game io_Game)
         {
             Console.WriteLine(GameMessages.GameIntro());
             GetNameFromUser(io_Game);
@@ -46,9 +46,9 @@ namespace UserInterface
         {
             Console.WriteLine(GameMessages.ChooseOpponentMsg());
             string numOfPlayerType = Console.ReadLine();
-            string playerType;
+            string playerType = null;
 
-            while (!io_Game.OpponentId(numOfPlayerType, out playerType))
+            while (!io_Game.OpponentId(numOfPlayerType, ref playerType))
             {
                 Console.WriteLine(GameMessages.WrongInputMsg());
                 Console.WriteLine(GameMessages.ChooseOpponentMsg());

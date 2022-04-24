@@ -18,23 +18,29 @@ namespace Checkers
             m_EatMove = Math.Abs(m_CurrentPoint.X - m_MoveTo.X) == k_Jump2Squares;
         }
 
+        public bool IsEatMove()
+        {
+            return m_EatMove;
+        }
+
         public bool IsAvailabeMove(Player i_PlayerTurn)
         {
             return i_PlayerTurn.ValidMoves.Contains(this);
         }
 
-        public void MakeMove(Board io_GameBoard, List<GameTool> io_OpponentTools)
+        public void MakeMove(Board io_GameBoard, List<GameTool> io_OpponentTools, List<Move> io_PlayerMoves)
         {
             GameTool toolToMove = io_GameBoard[m_CurrentPoint.Y, m_CurrentPoint.X];
 
             io_GameBoard.RemoveToolFromSquare(toolToMove.Location);
+            io_GameBoard.AddToolToSquare(toolToMove, m_MoveTo);
+            toolToMove.Location = m_MoveTo;
             if (m_EatMove)
             {
                 skipOverTheOpponentTool(io_GameBoard, io_OpponentTools);
+                io_PlayerMoves.Clear();
+                toolToMove.CheckOppurturnitiToEat(io_GameBoard, io_PlayerMoves);
             }
-
-            io_GameBoard.AddToolToSquare(toolToMove, m_MoveTo);
-            toolToMove.Location = m_MoveTo;
         }
 
         private void skipOverTheOpponentTool(Board io_GameBoard, List<GameTool> io_OpponentTools)

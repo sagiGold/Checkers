@@ -8,13 +8,21 @@
         public enum eTeamSign
         {
             PlayerO = 'O',
-            PlayerX = 'X',
+            PlayerX = 'X'
         }
 
         public enum eToolValue
         {
             Regular = 1,
             King = 4,
+        }
+
+        public enum eToolSign
+        {
+            ToolO = 'O',
+            ToolX = 'X',
+            ToolOKing = 'U',
+            ToolXKing = 'K'
         }
 
         public enum eDirection
@@ -26,17 +34,19 @@
         }
 
         private eTeamSign m_TeamSign;
+        private eToolSign m_ToolSign;
         private eToolValue m_Rank;
         private Point m_Location;
 
         public GameTool(eTeamSign i_Team, Point i_Location)
         {
             m_TeamSign = i_Team;
+            m_ToolSign = (eToolSign)i_Team;
             m_Location = i_Location;
             m_Rank = eToolValue.Regular;
         }
 
-        public eTeamSign Sign
+        public eTeamSign TeamSign
         {
             get
             {
@@ -46,6 +56,19 @@
             set
             {
                 m_TeamSign = value;
+            }
+        }
+
+        public eToolSign ToolSign
+        {
+            get
+            {
+                return m_ToolSign;
+            }
+
+            set
+            {
+                m_ToolSign = value;
             }
         }
 
@@ -79,6 +102,9 @@
         {
             return m_Rank == eToolValue.King;
         }
+
+
+
 
        /* public void isda(Board i_GameBoard, List<Move> io_PlayerValidMoves, System.Func<Board, List<Move>, eDirection, int> myFunc)
         {

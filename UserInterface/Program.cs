@@ -2,14 +2,15 @@
 using System.Text;
 using Checkers;
 
-namespace UserInerface
+namespace UserInterface
 {
     public class Program
     {
         public static void Main()
         {
-            Game game = new Game();
-            //game.Run();
+            GameManagement game = new GameManagement();
+            Console.WriteLine(game.BoardToString());
+            Console.ReadLine();
 
         }
     }

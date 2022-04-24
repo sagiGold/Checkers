@@ -6,8 +6,7 @@ namespace Checkers
     {
         private const GameTool k_Empty = null;
         private readonly GameTool[,] m_GameBoard;
-        private int m_Height;
-        private int m_Width;
+        private int m_Size;
 
         public enum eBoardSize
         {
@@ -24,11 +23,10 @@ namespace Checkers
         //    InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
         //}
 
-        public Board(int i_BoardSize)
+        public Board(eBoardSize i_BoardSize)
         {
-            m_Height = i_BoardSize;
-            m_Width = i_BoardSize;
-            m_GameBoard = new GameTool[i_BoardSize, i_BoardSize];
+            m_Size = (int)i_BoardSize;
+            m_GameBoard = new GameTool[m_Size, m_Size];
         }
 
         public GameTool this[int i_Row, int i_Colum]
@@ -44,29 +42,16 @@ namespace Checkers
             }
         }
 
-        public int Height
+        public int Size
         {
             get
             {
-                return m_Height;
+                return m_Size;
             }
 
             set
             {
-                m_Height = value;
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return m_Width;
-            }
-
-            set
-            {
-                m_Width = value;
+                m_Size = value;
             }
         }
 
@@ -78,12 +63,12 @@ namespace Checkers
 
         private void initializeBufferZone()
         {
-            int startLoopIndex = (m_Height / 2) - 1;
-            int endLoopIndex = (m_Height / 2) + 1;
+            int startLoopIndex = (m_Size / 2) - 1;
+            int endLoopIndex = (m_Size / 2) + 1;
 
             for (int i = startLoopIndex; i < endLoopIndex; i++)
             {
-                for (int j = 0; j < m_Width; j++)
+                for (int j = 0; j < m_Size; j++)
                 {
                     m_GameBoard[i, j] = k_Empty;
                 }
@@ -93,11 +78,11 @@ namespace Checkers
         private void initializePlayersTools(Player io_Player1, Player io_Player2)
         {
             int startLine = 0;
-            int endLine = (m_Height / 2) - 1;
+            int endLine = (m_Size / 2) - 1;
             arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
 
-            startLine = (m_Height / 2) + 1;
-            endLine = m_Height;
+            startLine = (m_Size / 2) + 1;
+            endLine = m_Size;
             arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
         }
 
@@ -105,7 +90,7 @@ namespace Checkers
         {
             for (int i = i_StartLine; i < i_EndLine; i++)
             {
-                for (int j = 0; j < m_Width; j++)
+                for (int j = 0; j < m_Size; j++)
                 {
                     if ((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0))
                     {
@@ -133,14 +118,14 @@ namespace Checkers
 
         public bool ToolInEndLine(GameTool i_Tool)
         {
-            int endLine = i_Tool.GetToolDirection() == GameTool.eDirection.Up ? 0 : m_Height - 1;
+            int endLine = i_Tool.GetToolDirection() == GameTool.eDirection.Up ? 0 : m_Size - 1;
 
             return i_Tool.Location.Y == endLine;
         }
 
         public bool IsPointInBoard(Point i_SquareLocation)
         {
-            return i_SquareLocation.X < m_Width && i_SquareLocation.Y < m_Height;
+            return i_SquareLocation.X < m_Size && i_SquareLocation.Y < m_Size;
         }
 
         public bool IsSquareEmpty(Point i_SquareLocation)
@@ -150,7 +135,7 @@ namespace Checkers
 
         public bool IsOpponentInSquare(Point i_SquareLocation, GameTool.eTeamSign i_ToolTeam)
         {
-            return !IsSquareEmpty(i_SquareLocation) && m_GameBoard[i_SquareLocation.Y, i_SquareLocation.X].Sign != i_ToolTeam;
+            return !IsSquareEmpty(i_SquareLocation) && m_GameBoard[i_SquareLocation.Y, i_SquareLocation.X].TeamSign != i_ToolTeam;
         }
 
         //public void Clear()/// Dont know if we need it
