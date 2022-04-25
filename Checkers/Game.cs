@@ -10,12 +10,21 @@ namespace Checkers
         private Board m_Board = null;
         private Player m_CurrentPlayer = null;
         private Player m_NextPlayer = null;
+        private Player m_Winner = null;
 
         public Board Board
         {
             get
             {
                 return m_Board;
+            }
+        }
+
+        public Player Winner
+        {
+            get
+            {
+                return m_Winner;
             }
         }
 
@@ -121,6 +130,58 @@ namespace Checkers
         {
             return i_LastMoveEat && !(m_CurrentPlayer.ValidMoves.Count == 0);
         }
+
+        public bool IsGameOver()
+        {
+            bool isGameOver = false;
+
+            if (m_CurrentPlayer.ValidMoves.Count != 0 && m_NextPlayer.ValidMoves.Count == 0)
+            {
+                updateWinnerData(m_CurrentPlayer, m_NextPlayer);
+                isGameOver = true;
+            }
+            else if (m_CurrentPlayer.ValidMoves.Count == 0 && m_NextPlayer.ValidMoves.Count != 0)
+            {
+                updateWinnerData(m_NextPlayer, m_CurrentPlayer);
+                isGameOver = true;
+            }
+            else if (m_CurrentPlayer.ValidMoves.Count == 0 && m_NextPlayer.ValidMoves.Count == 0)
+            {
+                isGameOver = true; // Draw
+            }
+
+            return isGameOver;
+        }
+
+        private void updateWinnerData(Player i_Winner, Player i_Loser)
+        {
+            int winnerToolCount = 0;
+            int loserToolCount = 0;
+
+            foreach (GameTool tool in i_Winner.PlayerTools)
+            {
+                winnerToolCount += (int)tool.Rank;
+            }
+
+            foreach (GameTool tool in i_Loser.PlayerTools)
+            {
+                loserToolCount += (int)tool.Rank;
+            }
+
+            if (loserToolCount < winnerToolCount) 
+            {
+                i_Winner.Score += winnerToolCount - loserToolCount;
+            }
+            else // Our own bunus to player in case of winning and having smaller countdown
+            {
+                i_Winner.Score += 5;
+            }
+
+            m_Winner = i_Winner;
+        }
+
+
+
 
         //public bool PlayerTurn(Move i_CurrentMove)
         //{
