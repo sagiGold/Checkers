@@ -12,8 +12,10 @@ namespace UserInterface
         {
             Console.WriteLine(GameMessages.GameIntro());
             GetNameFromUser(io_Game);
+            io_Game.SwapPlayers();
             GetBoardSizeFromUser(io_Game);
             GetOpponent(io_Game);
+            io_Game.SwapPlayers();
         }
 
         private static void GetNameFromUser(Game io_Game)

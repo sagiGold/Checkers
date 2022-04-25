@@ -8,8 +8,8 @@ namespace Checkers
     public class Game
     {
         Board m_Board = null;
-        Player m_PlayerOne = null;
-        Player m_PlayerTwo = null;
+        Player m_CurrentPlayer = null;
+        Player m_NextPlayer = null;
         bool m_IsPlayerOneTurn = true;
 
         public Game()
@@ -38,13 +38,12 @@ namespace Checkers
 
         public bool InitPlayer(string i_Name)
         {
-            Player playerToUpdate = m_PlayerOne == null ? m_PlayerOne : m_PlayerTwo;
             bool updated = false;
 
             if (updated = Player.IsValidUserName(i_Name))
             {
-                GameTool.eTeamSign sign = m_PlayerOne == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
-                playerToUpdate = new Player(i_Name, sign);
+                GameTool.eTeamSign sign = m_nextPlayer == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
+                currentPlayer = new Player(i_Name, sign);
             }
 
             return updated;
@@ -78,8 +77,8 @@ namespace Checkers
 
         public bool PlayerTurn(Move i_CurrentMove)
         {
-            Player currentPlayer = m_IsPlayerOneTurn ? m_PlayerOne : m_PlayerTwo;
-            Player nextPlayer = m_IsPlayerOneTurn ? m_PlayerTwo : m_PlayerOne;
+            Player currentPlayer = m_IsPlayerOneTurn ? m_CurrentPlayer : m_NextPlayer;
+            Player nextPlayer = m_IsPlayerOneTurn ? m_NextPlayer : m_CurrentPlayer;
             bool playerPlayed = false;
 
             if (playerPlayed = i_CurrentMove.IsAvailabeMove(currentPlayer))
@@ -92,7 +91,7 @@ namespace Checkers
 
         public void BulidValidMoveListForPlayer()
         {
-            Player currentPlayer = m_IsPlayerOneTurn ? m_PlayerOne : m_PlayerTwo;
+            Player currentPlayer = m_IsPlayerOneTurn ? m_CurrentPlayer : m_NextPlayer;
 
             currentPlayer.ValidMoves.Clear();
             foreach (GameTool tool in currentPlayer.PlayerTools)
@@ -111,9 +110,9 @@ namespace Checkers
 
         public void InitializeForNewGame()
         {
-            m_PlayerOne.InitializePlayerForNewGame();
-            m_PlayerTwo.InitializePlayerForNewGame();
-            Board.InitialBoardForNewGame(m_PlayerOne, m_PlayerTwo);
+            m_CurrentPlayer.InitializePlayerForNewGame();
+            m_NextPlayer.InitializePlayerForNewGame();
+            Board.InitialBoardForNewGame(m_CurrentPlayer, m_NextPlayer);
             m_IsPlayerOneTurn = true;
         }
     }

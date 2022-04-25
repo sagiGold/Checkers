@@ -9,7 +9,7 @@ namespace UserInterface
         public static void Main()
         {
             GameManagement game = new GameManagement();
-            Game.Run();
+            game.Run();
 
         }
     }
