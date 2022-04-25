@@ -45,5 +45,12 @@ namespace Checkers
             io_GameBoard.RemoveToolFromSquare(toolToDelete.Location);
             io_OpponentTools.Remove(toolToDelete);
         }
+
+        public bool Equals(Move i_Move)
+        {
+            bool isEqual = m_CurrentPoint == i_Move.m_CurrentPoint && m_MoveTo == i_Move.m_MoveTo && m_EatMove == i_Move.m_EatMove;
+
+            return isEqual;
+        }
     }
 }
