@@ -135,5 +135,12 @@ namespace Checkers
             isPlayerType = ePLayerType.TryParse(i_UserType, out o_PlayerType);
             return isPlayerType;
         }
+
+        public void InitializePlayerForNewGame()
+        {
+            m_LastMove = null;
+            m_PlayerTools.Clear();
+            m_ValidMovesList.Clear();
+        }
     }
 }

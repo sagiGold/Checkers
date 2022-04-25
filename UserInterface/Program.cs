@@ -9,8 +9,7 @@ namespace UserInterface
         public static void Main()
         {
             GameManagement game = new GameManagement();
-            Console.WriteLine(game.BoardToString());
-            Console.ReadLine();
+            Game.Run();
 
         }
     }

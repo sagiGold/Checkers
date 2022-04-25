@@ -7,7 +7,7 @@ namespace Checkers
 {
     public class Game
     {
-        Board m_Board = new Board(Board.eBoardSize.Medium);
+        Board m_Board = null;
         Player m_PlayerOne = null;
         Player m_PlayerTwo = null;
         bool m_IsPlayerOneTurn = true;
@@ -109,6 +109,12 @@ namespace Checkers
             }
         }
 
-        // make function of initial the board and the lists of tools and lasts Move 
+        public void InitializeForNewGame()
+        {
+            m_PlayerOne.InitializePlayerForNewGame();
+            m_PlayerTwo.InitializePlayerForNewGame();
+            Board.InitialBoardForNewGame(m_PlayerOne, m_PlayerTwo);
+            m_IsPlayerOneTurn = true;
+        }
     }
 }

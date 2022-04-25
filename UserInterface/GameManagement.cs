@@ -9,6 +9,7 @@ namespace UserInterface
     public class GameManagement
     {
         private Game m_Game = new Game();
+       
         public void Run()
         {
             InitiateNewGame();
@@ -17,16 +18,20 @@ namespace UserInterface
         public void InitiateNewGame()
         {
             MainMenu.GetPreGameData(m_Game);
-            //m_Game.Board.InitialBoardForNewGame(m_Game.pl)
-
+            m_Game.InitializeForNewGame();
         }
 
 
-
-        public Move TranslateUserInputToMove(string i_MoveInput)
+        public Move DecodeUserInputToMove(string i_MoveInput)
         {
             return null;
         }
+
+        public string IncodeMoveToUserInput(string i_MoveInput)
+        {
+            return null;
+        }
+
 
         public string BoardToString()
         {
