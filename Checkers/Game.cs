@@ -42,8 +42,8 @@ namespace Checkers
 
             if (updated = Player.IsValidUserName(i_Name))
             {
-                GameTool.eTeamSign sign = m_nextPlayer == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
-                currentPlayer = new Player(i_Name, sign);
+                GameTool.eTeamSign sign = m_NextPlayer == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
+                m_CurrentPlayer = new Player(i_Name, sign);
             }
 
             return updated;
@@ -77,13 +77,11 @@ namespace Checkers
 
         public bool PlayerTurn(Move i_CurrentMove)
         {
-            Player currentPlayer = m_IsPlayerOneTurn ? m_CurrentPlayer : m_NextPlayer;
-            Player nextPlayer = m_IsPlayerOneTurn ? m_NextPlayer : m_CurrentPlayer;
             bool playerPlayed = false;
 
-            if (playerPlayed = i_CurrentMove.IsAvailabeMove(currentPlayer))
+            if (playerPlayed = i_CurrentMove.IsAvailabeMove(m_CurrentPlayer))
             {
-                i_CurrentMove.MakeMove(m_Board, nextPlayer.PlayerTools, currentPlayer.ValidMoves);
+                i_CurrentMove.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
             }
 
             return playerPlayed;
@@ -91,19 +89,18 @@ namespace Checkers
 
         public void BulidValidMoveListForPlayer()
         {
-            Player currentPlayer = m_IsPlayerOneTurn ? m_CurrentPlayer : m_NextPlayer;
+            m_CurrentPlayer.ValidMoves.Clear();
 
-            currentPlayer.ValidMoves.Clear();
-            foreach (GameTool tool in currentPlayer.PlayerTools)
+            foreach (GameTool tool in m_CurrentPlayer.PlayerTools)
             {
-                tool.CheckOppurturnitiToEat(m_Board, currentPlayer.ValidMoves);
+                tool.CheckOppurturnitiToEat(m_Board, m_CurrentPlayer.ValidMoves);
             }
 
-            if (currentPlayer.ValidMoves.Count == 0) // Only if there is no piece to eat
+            if (m_CurrentPlayer.ValidMoves.Count == 0) // Only if there is no piece to eat
             {
-                foreach (GameTool tool in currentPlayer.PlayerTools)
+                foreach (GameTool tool in m_CurrentPlayer.PlayerTools)
                 {
-                    tool.AddValidMovesForTool(m_Board, currentPlayer.ValidMoves);
+                    tool.AddValidMovesForTool(m_Board, m_CurrentPlayer.ValidMoves);
                 }
             }
         }
@@ -114,6 +111,13 @@ namespace Checkers
             m_NextPlayer.InitializePlayerForNewGame();
             Board.InitialBoardForNewGame(m_CurrentPlayer, m_NextPlayer);
             m_IsPlayerOneTurn = true;
+        }
+
+        public void SwapPlayers()
+        {
+            Player tempPlayer = m_CurrentPlayer;
+            m_CurrentPlayer = m_NextPlayer;
+            m_NextPlayer = tempPlayer;
         }
     }
 }

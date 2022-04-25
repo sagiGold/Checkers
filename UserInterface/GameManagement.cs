@@ -13,14 +13,13 @@ namespace UserInterface
         public void Run()
         {
             InitiateNewGame();
-
         }
         public void InitiateNewGame()
         {
             MainMenu.GetPreGameData(m_Game);
             m_Game.InitializeForNewGame();
+            Console.WriteLine(BoardToString());
         }
-
 
         public Move DecodeUserInputToMove(string i_MoveInput)
         {
@@ -31,7 +30,6 @@ namespace UserInterface
         {
             return null;
         }
-
 
         public string BoardToString()
         {
@@ -54,7 +52,15 @@ namespace UserInterface
 
                 for (int j = 0; j < m_Game.Board.Size; j++)
                 {
-                    boardInString.Append("| " + (char)m_Game.Board[i, j].ToolSign + " ");
+                    if (m_Game.Board[i, j] == null)
+                    {
+                        boardInString.Append("| " + " " + " ");
+
+                    }
+                    else
+                    {
+                        boardInString.Append("| " + (char)m_Game.Board[i, j].ToolSign + " ");
+                    }
                 }
 
                 boardInString.Append("|");
