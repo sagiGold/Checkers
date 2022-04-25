@@ -26,7 +26,19 @@ namespace Checkers
 
         public bool IsAvailabeMove(Move i_Move)
         {
-            return m_CurrentPlayer.ValidMoves.Contains(i_Move);
+            bool isAvailabe = false;
+
+            foreach (Move move in m_CurrentPlayer.ValidMoves)
+            {
+                if (move.Equals(i_Move))
+                {
+                    isAvailabe = true;
+                    break;
+                }
+            }
+
+            return isAvailabe;
+           // return m_CurrentPlayer.ValidMoves.Contains(i_Move);
         }
 
         public bool InitPlayer(string i_Name)
@@ -105,9 +117,9 @@ namespace Checkers
             i_Move.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
         }
 
-        public bool CheckForDoubleStrike()
+        public bool CheckForDoubleStrike(bool i_LastMoveEat)
         {
-            return !(m_CurrentPlayer.ValidMoves.Count == 0);
+            return i_LastMoveEat && !(m_CurrentPlayer.ValidMoves.Count == 0);
         }
 
         //public bool PlayerTurn(Move i_CurrentMove)

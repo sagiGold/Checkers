@@ -125,7 +125,7 @@ namespace Checkers
 
         public bool IsPointInBoard(Point i_SquareLocation)
         {
-            return i_SquareLocation.X < m_Size && i_SquareLocation.Y < m_Size;
+            return i_SquareLocation.X < m_Size && i_SquareLocation.Y < m_Size && i_SquareLocation.X >= 0 && i_SquareLocation.Y >= 0;
         }
 
         public bool IsSquareEmpty(Point i_SquareLocation)
