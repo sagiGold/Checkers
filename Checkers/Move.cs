@@ -23,11 +23,6 @@ namespace Checkers
             return m_EatMove;
         }
 
-        public bool IsAvailabeMove(Player i_PlayerTurn)
-        {
-            return i_PlayerTurn.ValidMoves.Contains(this);
-        }
-
         public void MakeMove(Board io_GameBoard, List<GameTool> io_OpponentTools, List<Move> io_PlayerMoves)
         {
             GameTool toolToMove = io_GameBoard[m_CurrentPoint.Y, m_CurrentPoint.X];

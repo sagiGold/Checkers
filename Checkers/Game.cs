@@ -36,6 +36,11 @@ namespace Checkers
             return !i_Tool.IsKing() && m_Board.ToolInEndLine(i_Tool);
         }
 
+        public bool IsAvailabeMove(Move i_Move)
+        {
+            return m_CurrentPlayer.ValidMoves.Contains(i_Move);
+        }
+
         public bool InitPlayer(string i_Name)
         {
             bool updated = false;
@@ -118,6 +123,16 @@ namespace Checkers
             Player tempPlayer = m_CurrentPlayer;
             m_CurrentPlayer = m_NextPlayer;
             m_NextPlayer = tempPlayer;
+        }
+
+        public void ExecuteMove(Move i_Move)
+        {
+            i_Move.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
+        }
+
+        public bool CheckIfDoubleEat()
+        {
+            return !(m_CurrentPlayer.ValidMoves.Count == 0);
         }
     }
 }

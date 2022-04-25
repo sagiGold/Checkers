@@ -40,5 +40,10 @@ for 10X10 please press 10.";
         {
             return "Wrong input, please try again";
         }
+
+        public static string GetMoveMsg()
+        {
+            return "Please enter your next move";
+        }
     }
 }

@@ -13,22 +13,62 @@ namespace UserInterface
         public void Run()
         {
             InitiateNewGame();
+
+            while (true /* something that checks if end game in game logic*/)
+            {
+                MakeMove();
+                while (m_Game.CheckIfDoubleEat())
+                {
+                    MakeMove();
+                }
+                m_Game.SwapPlayers();
+            }
         }
+
+        public void MakeMove()
+        {
+            GameMessages.GetMoveMsg();
+            string moveInput = Console.ReadLine();
+            KeyValuePair<bool, Move> userNextMove;
+
+            while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key && !m_Game.IsAvailabeMove(userNextMove.Value))
+            {
+                GameMessages.WrongInputMsg();
+                GameMessages.GetMoveMsg();
+                moveInput = Console.ReadLine();
+            }
+
+            m_Game.ExecuteMove(userNextMove.Value);
+        }
+
+        public KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)
+        {
+            bool validInput = char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
+                && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)
+                && i_Move[2] == '>';                                     // Input built as the following template : Aa>Bb
+            Move newMove = null;
+
+            if (validInput)
+            {
+                newMove = DecodeUserInputToMove(i_Move);
+            }
+
+            return new KeyValuePair<bool, Move>(validInput, newMove);
+        }
+
+        public Move DecodeUserInputToMove(string i_Move)
+        {
+            Point moveFrom = new Point((i_Move[0] - 'A'), (i_Move[1] - 'a'));
+            Point moveTo = new Point((i_Move[3] - 'A'), (i_Move[4] - 'a'));
+
+            return new Move(moveFrom, moveTo);
+        }
+
         public void InitiateNewGame()
         {
             MainMenu.GetPreGameData(m_Game);
             m_Game.InitializeForNewGame();
             Console.WriteLine(BoardToString());
-        }
-
-        public Move DecodeUserInputToMove(string i_MoveInput)
-        {
-            return null;
-        }
-
-        public string IncodeMoveToUserInput(string i_MoveInput)
-        {
-            return null;
         }
 
         public string BoardToString()
