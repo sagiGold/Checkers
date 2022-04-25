@@ -23,9 +23,9 @@ namespace Checkers
         //    InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
         //}
 
-        public Board(eBoardSize i_BoardSize)
+        public Board(int i_BoardSize)
         {
-            m_Size = (int)i_BoardSize;
+            m_Size = i_BoardSize;
             m_GameBoard = new GameTool[m_Size, m_Size];
         }
 

@@ -26,6 +26,7 @@ namespace UserInterface
         {
             while (true /* something that checks if end game in game logic*/)
             {
+                m_Game.BulidMoveList();
                 PlayerTurn();
                 m_Game.SwapPlayers();
             }
@@ -45,14 +46,14 @@ namespace UserInterface
 
         private Move GetValidMove()
         {
-            GameMessages.GetMoveMsg();
+            PrintMessage.GetMoveMsg();
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
 
             while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key && !m_Game.IsAvailabeMove(userNextMove.Value))
             {
-                GameMessages.WrongInputMsg();
-                GameMessages.GetMoveMsg();
+                PrintMessage.WrongInputMsg();
+                PrintMessage.GetMoveMsg();
                 moveInput = Console.ReadLine();
             }
 

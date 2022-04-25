@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="GameManagement.cs" />
     <Compile Include="MainMenu.cs" />
+    <Compile Include="PrintMessage.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

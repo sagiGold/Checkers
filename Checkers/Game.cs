@@ -44,10 +44,10 @@ namespace Checkers
 
         public bool InitBoard(string i_Size)
         {
-            Board.eBoardSize size;
+            int size;
             bool updated = false;
 
-            if (updated = Player.ePLayerType.TryParse(i_Size, out size))
+            if (updated = Board.ValidSize(i_Size, out size))
             {
                 m_Board = new Board(size);
             }
