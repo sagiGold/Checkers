@@ -7,21 +7,9 @@ namespace Checkers
 {
     public class Game
     {
-        Board m_Board = null;
-        Player m_CurrentPlayer = null;
-        Player m_NextPlayer = null;
-        bool m_IsPlayerOneTurn = true;
-
-        public Game()
-        {
-        }
-
-        //public GameManagement(int i_BoardSize, string i_PlayerOneName, string i_PlayerTwoName)
-        //{
-        //    m_PlayerOne = new Player(i_PlayerOneName, GameTool.eToolSign.PlayerX);
-        //    m_PlayerTwo = new Player(i_PlayerTwoName, GameTool.eToolSign.PlayerO);
-        //    m_Board = new Board(i_BoardSize, m_PlayerOne, m_PlayerTwo);
-        //}
+        private Board m_Board = null;
+        private Player m_CurrentPlayer = null;
+        private Player m_NextPlayer = null;
 
         public Board Board
         {
@@ -67,12 +55,12 @@ namespace Checkers
             return updated;
         }
 
-        public bool OpponentId(string i_NumOfPlayerType, ref string io_PlayerType )
+        public bool CheckOpponentType(string i_UserInput, ref string io_PlayerType )
         {
             Player.ePLayerType humanOrComputer;
             bool updated = false;
 
-            if (updated = Player.ePLayerType.TryParse(i_NumOfPlayerType, out humanOrComputer))
+            if (updated = Player.ePLayerType.TryParse(i_UserInput, out humanOrComputer))
             {
                 io_PlayerType = humanOrComputer == Player.ePLayerType.Human ? "Human" : "Computer";
             }
@@ -80,19 +68,7 @@ namespace Checkers
             return updated;
         }
 
-        public bool PlayerTurn(Move i_CurrentMove)
-        {
-            bool playerPlayed = false;
-
-            if (playerPlayed = i_CurrentMove.IsAvailabeMove(m_CurrentPlayer))
-            {
-                i_CurrentMove.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
-            }
-
-            return playerPlayed;
-        }
-
-        public void BulidValidMoveListForPlayer()
+        public void BulidMoveList()
         {
             m_CurrentPlayer.ValidMoves.Clear();
 
@@ -110,12 +86,11 @@ namespace Checkers
             }
         }
 
-        public void InitializeForNewGame()
+        public void ResetGame()
         {
-            m_CurrentPlayer.InitializePlayerForNewGame();
-            m_NextPlayer.InitializePlayerForNewGame();
-            Board.InitialBoardForNewGame(m_CurrentPlayer, m_NextPlayer);
-            m_IsPlayerOneTurn = true;
+            m_CurrentPlayer.ResetPlayerForNewGame();
+            m_NextPlayer.ResetPlayerForNewGame();
+            Board.InitializeBoard(m_CurrentPlayer, m_NextPlayer);
         }
 
         public void SwapPlayers()
@@ -130,9 +105,21 @@ namespace Checkers
             i_Move.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
         }
 
-        public bool CheckIfDoubleEat()
+        public bool CheckForDoubleStrike()
         {
             return !(m_CurrentPlayer.ValidMoves.Count == 0);
         }
+
+        //public bool PlayerTurn(Move i_CurrentMove)
+        //{
+        //    bool playerPlayed = false;
+
+        //    if (playerPlayed = i_CurrentMove.IsAvailabeMove(m_CurrentPlayer))
+        //    {
+        //        i_CurrentMove.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
+        //    }
+
+        //    return playerPlayed;
+        //}
     }
 }

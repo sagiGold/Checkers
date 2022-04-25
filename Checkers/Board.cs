@@ -55,7 +55,7 @@ namespace Checkers
             }
         }
 
-        public void InitialBoardForNewGame(Player io_Player1, Player io_Player2)
+        public void InitializeBoard(Player io_Player1, Player io_Player2)
         {
             initializeBufferZone();
             initializePlayersTools(io_Player1, io_Player2);

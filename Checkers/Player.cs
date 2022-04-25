@@ -136,7 +136,7 @@ namespace Checkers
             return isPlayerType;
         }
 
-        public void InitializePlayerForNewGame()
+        public void ResetPlayerForNewGame()
         {
             m_LastMove = null;
             m_PlayerTools.Clear();

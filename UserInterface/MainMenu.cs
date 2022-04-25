@@ -47,10 +47,10 @@ namespace UserInterface
         private static void GetOpponent(Game io_Game)
         {
             Console.WriteLine(GameMessages.ChooseOpponentMsg());
-            string numOfPlayerType = Console.ReadLine();
+            string userInput = Console.ReadLine();
             string playerType = null;
 
-            while (!io_Game.OpponentId(numOfPlayerType, ref playerType))
+            while (!io_Game.CheckOpponentType(userInput, ref playerType))
             {
                 Console.WriteLine(GameMessages.WrongInputMsg());
                 Console.WriteLine(GameMessages.ChooseOpponentMsg());

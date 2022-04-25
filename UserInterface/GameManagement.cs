@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Checkers;
@@ -12,20 +13,37 @@ namespace UserInterface
        
         public void Run()
         {
-            InitiateNewGame();
+            MainMenu.GetPreGameData(m_Game);
 
+            while (true /*keepPlaying*/)
+            {
+                m_Game.ResetGame();
+                RunSingleMatch();
+            }
+        }
+
+        public void RunSingleMatch()
+        {
             while (true /* something that checks if end game in game logic*/)
             {
-                MakeMove();
-                while (m_Game.CheckIfDoubleEat())
-                {
-                    MakeMove();
-                }
+                PlayerTurn();
                 m_Game.SwapPlayers();
             }
         }
 
-        public void MakeMove()
+        public void PlayerTurn()
+        {
+            PrintBoard();
+            Move nextMove = GetValidMove();
+            m_Game.ExecuteMove(nextMove);
+
+            if (m_Game.CheckForDoubleStrike())
+            {
+                PlayerTurn();
+            }
+        }
+
+        private Move GetValidMove()
         {
             GameMessages.GetMoveMsg();
             string moveInput = Console.ReadLine();
@@ -38,14 +56,14 @@ namespace UserInterface
                 moveInput = Console.ReadLine();
             }
 
-            m_Game.ExecuteMove(userNextMove.Value);
+            return userNextMove.Value;
         }
 
         public KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)
         {
             bool validInput = char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
                 && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)
-                && i_Move[2] == '>';                                     // Input built as the following template : Aa>Bb
+                && i_Move[2] == '>';    // Input built as the following template : Aa>Bb
             Move newMove = null;
 
             if (validInput)
@@ -64,14 +82,13 @@ namespace UserInterface
             return new Move(moveFrom, moveTo);
         }
 
-        public void InitiateNewGame()
+        private void PrintBoard()
         {
-            MainMenu.GetPreGameData(m_Game);
-            m_Game.InitializeForNewGame();
+            Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine(BoardToString());
         }
 
-        public string BoardToString()
+        private string BoardToString()
         {
             StringBuilder boardInString = new StringBuilder();
             string horizontalEqualsLine = createEqualsLine(m_Game.Board.Size);
