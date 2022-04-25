@@ -10,6 +10,7 @@ namespace UserInterface
     public class GameManagement
     {
         private Game m_Game = new Game();
+        bool m_PressedQ = false;
        
         public void Run()
         {
@@ -24,11 +25,28 @@ namespace UserInterface
 
         public void RunSingleMatch()
         {
-            while (true /* something that checks if end game in game logic*/)
+            while (!m_Game.IsGameOver() && !m_PressedQ)
             {
                 m_Game.BulidMoveList();
                 PlayerTurn();
                 m_Game.SwapPlayers();
+            }
+
+            handleGameOver();    
+        }
+
+        private void handleGameOver()
+        {
+            if (!m_PressedQ)
+            {
+                if (m_Game.Winner != null)
+                {
+                    PrintMessage.WinningMsg(m_Game.Winner);
+                }
+                else
+                {
+                    PrintMessage.DrawMsg();
+                }
             }
         }
 
@@ -50,7 +68,8 @@ namespace UserInterface
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
 
-            while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key && !m_Game.IsAvailabeMove(userNextMove.Value))
+            while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key 
+                && !m_Game.IsAvailabeMove(userNextMove.Value /*&& !m_PressedQ*/))
             {
                 PrintMessage.WrongInputMsg();
                 PrintMessage.GetMoveMsg();

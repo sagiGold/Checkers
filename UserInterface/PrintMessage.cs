@@ -36,5 +36,15 @@ namespace UserInterface
         {
             Console.WriteLine(Checkers.GameMessages.GetMoveMsg());
         }
+
+        public static void WinningMsg(Checkers.Player i_Winner)
+        {
+            Console.WriteLine(Checkers.GameMessages.WinningMsg(i_Winner));
+        }
+
+        public static void DrawMsg()
+        {
+            Console.WriteLine(Checkers.GameMessages.DrawMsg());
+        }
     }
 }
