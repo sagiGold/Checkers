@@ -44,21 +44,17 @@ namespace UserInterface
         {
             Ex02.ConsoleUtils.Screen.Clear();
 
-            if (!m_PressedQ)
+            if (m_PressedQ)
             {
-                if (m_Game.Winner != null)
-                {
-                    PrintMessage.WinningMsg(m_Game.Winner);
-                }
-                else
-                {
-                    PrintMessage.DrawMsg();
-                }
+                m_Game.CurrentPlayerQuitMatch();
+                PrintMessage.QuitGameMsg(m_Game);
             }
             else
             {
-                //Quit game message** >> loser and score penalty
+                PrintMessage.WinningMsg(m_Game);
             }
+
+            PrintMessage.StatusMsg(m_Game);
         }
 
         public void PlayerTurn()

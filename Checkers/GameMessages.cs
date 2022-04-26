@@ -46,15 +46,16 @@ for 10X10 please press 10.";
             return "Please enter your next move";
         }
 
-        public static string WinningMsg(Player i_Winner)
+        public static string WinningMsg(Game i_Game)
         {
-            return $"{i_Winner.Name} wins with {i_Winner.Score} points, Congrats !!!";
+            return $"{i_Game.Winner.Name} wins with {i_Game.Winner.Score} points, Congrats !!!";
         }
 
         public static string DrawMsg()
         {
             return "It's a draw !";
         }
+
         public static string KeepPlayingMsg()
         {
             string msg = @"Would you like to play another round ?:
@@ -68,5 +69,20 @@ for 10X10 please press 10.";
         {
             return "Bye Bye :)";
         }
+
+        public static string QuitGameMsg(Game m_Game)
+        {
+            return $"{m_Game.CurrentPlayer.Name} quit the match and got 3 points penalty";
+        }
+
+        public static string StatusMsg(Game m_Game)
+        {
+            string msg = string.Format("{0} has {1} points." +
+                "{2} has {3} points. ", m_Game.CurrentPlayer.Name, m_Game.CurrentPlayer.Score, 
+                m_Game.OpponentPlayer.Name, m_Game.OpponentPlayer.Score);
+
+            return msg;
+        }
+
     }
 }
