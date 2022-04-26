@@ -23,6 +23,14 @@ namespace Checkers
             return m_EatMove;
         }
 
+        private void switchToKing(GameTool io_Tool, Board i_GameBoard)
+        {
+            if (!io_Tool.IsKing() && i_GameBoard.ToolInEndLine(io_Tool))
+            {
+                io_Tool.MakeKing();
+            }
+        }
+
         public void MakeMove(Board io_GameBoard, List<GameTool> io_OpponentTools, List<Move> io_PlayerMoves)
         {
             GameTool toolToMove = io_GameBoard[m_CurrentPoint.Y, m_CurrentPoint.X];
@@ -36,6 +44,8 @@ namespace Checkers
                 io_PlayerMoves.Clear();
                 toolToMove.CheckOppurturnitiToEat(io_GameBoard, io_PlayerMoves);
             }
+
+            switchToKing(toolToMove, io_GameBoard);
         }
 
         private void skipOverTheOpponentTool(Board io_GameBoard, List<GameTool> io_OpponentTools)

@@ -55,7 +55,7 @@ namespace UserInterface
         public void PlayerTurn()
         {
             PrintBoard();
-            Move nextMove = GetValidMove();
+            Move nextMove = m_Game.IsComputerTurn() ? m_Game.GetComputerMove() : GetValidMove();
             m_Game.ExecutePlayerMove(nextMove);
 
             if (m_Game.CheckForDoubleStrike(nextMove.IsEatMove()))
@@ -69,7 +69,6 @@ namespace UserInterface
             PrintMessage.GetMoveMsg();
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
-
 
             while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key || !m_Game.IsAvailabeMove(userNextMove.Value))
             {

@@ -121,6 +121,11 @@ namespace Checkers
             }
         }
 
+        public bool IsComputer()
+        {
+            return m_PlayerType == ePlayerType.Computer;
+        }
+
         public static bool IsValidUserName(string i_UserName)
         {
             bool nameContainSpaces = i_UserName.Contains(" ");

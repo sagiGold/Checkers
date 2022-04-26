@@ -103,8 +103,11 @@
             return m_Rank == eToolValue.King;
         }
 
-
-
+        public void MakeKing()
+        {
+            m_Rank = eToolValue.King;
+            m_ToolSign = m_TeamSign == eTeamSign.PlayerX ? eToolSign.ToolXKing : eToolSign.ToolOKing;
+        }
 
        /* public void isda(Board i_GameBoard, List<Move> io_PlayerValidMoves, System.Func<Board, List<Move>, eDirection, int> myFunc)
         {
