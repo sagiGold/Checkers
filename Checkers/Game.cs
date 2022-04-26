@@ -28,9 +28,9 @@ namespace Checkers
             }
         }
 
-        public bool CheckSwitchToKing(GameTool i_Tool)
+        public bool IsComputerTurn()
         {
-            return !i_Tool.IsKing() && m_Board.ToolInEndLine(i_Tool);
+            return m_CurrentPlayer.IsComputer();
         }
 
         public bool IsAvailabeMove(Move i_Move)
@@ -137,11 +137,7 @@ namespace Checkers
 
             if (m_CurrentPlayer.ValidMoves.Count == 0)
             {
-                if (m_OpponentPlayer.ValidMoves.Count != 0)
-                {
                 updateWinnerData(m_OpponentPlayer, m_CurrentPlayer);
-                }
-
                 isGameOver = true;
             }
 
@@ -172,8 +168,12 @@ namespace Checkers
             return m_Board.ToString();
         }
 
-
-
+        public Move GetComputerMove()
+        {
+            Random random = new Random();
+          
+            return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
+        }
 
         //public bool PlayerTurn(Move i_CurrentMove)
         //{

@@ -60,7 +60,7 @@ namespace UserInterface
         public void PlayerTurn()
         {
             PrintBoard();
-            Move nextMove = GetValidMove();
+            Move nextMove = m_Game.IsComputerTurn() ? m_Game.GetComputerMove() : GetValidMove();
 
             if (!m_PressedQ)
             {
