@@ -32,7 +32,7 @@ namespace Checkers
         {
             get
             {
-                return m_Winner;
+                return m_CurrentPlayer;
             }
         }
 
@@ -40,7 +40,7 @@ namespace Checkers
         {
             get
             {
-                return m_Winner;
+                return m_OpponentPlayer;
             }
         }
 

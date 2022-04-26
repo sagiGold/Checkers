@@ -77,9 +77,9 @@ for 10X10 please press 10.";
 
         public static string StatusMsg(Game m_Game)
         {
-            string msg = string.Format("{0} has {1} points." +
-                "{2} has {3} points. ", m_Game.CurrentPlayer.Name, m_Game.CurrentPlayer.Score, 
-                m_Game.OpponentPlayer.Name, m_Game.OpponentPlayer.Score);
+            string msg = string.Format(@"{0} has {1} points.
+{2} has {3} points.{4}", m_Game.CurrentPlayer.Name, m_Game.CurrentPlayer.Score, 
+                m_Game.OpponentPlayer.Name, m_Game.OpponentPlayer.Score, Environment.NewLine);
 
             return msg;
         }
