@@ -10,7 +10,7 @@ namespace UserInterface
     public class GameManagement
     {
         private Game m_Game = new Game();
-        bool m_PressedQ = false;
+        bool m_PressedQ; //option for nullable
        
         public void Run()
         {
@@ -18,6 +18,7 @@ namespace UserInterface
 
             while (true /*keepPlaying*/)
             {
+                m_PressedQ = false;
                 m_Game.ResetGame();
                 RunSingleMatch();
             }
@@ -50,17 +51,25 @@ namespace UserInterface
                     PrintMessage.DrawMsg();
                 }
             }
+            else
+            {
+                //Quit game message** >> loser and score penalty
+            }
         }
 
         public void PlayerTurn()
         {
             PrintBoard();
             Move nextMove = GetValidMove();
-            m_Game.ExecutePlayerMove(nextMove);
 
-            if (m_Game.CheckForDoubleStrike(nextMove.IsEatMove()))
+            if (!m_PressedQ)
             {
-                PlayerTurn();
+                m_Game.ExecutePlayerMove(nextMove);
+
+                if (m_Game.CheckForDoubleStrike(nextMove.IsEatMove()))
+                {
+                    PlayerTurn();
+                }
             }
         }
 
@@ -70,8 +79,8 @@ namespace UserInterface
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
 
-
-            while (!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key || !m_Game.IsAvailabeMove(userNextMove.Value))
+            while ((!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key ||
+                !m_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
             {
                 PrintMessage.WrongInputMsg();
                 PrintMessage.GetMoveMsg();
@@ -79,6 +88,18 @@ namespace UserInterface
             }
 
             return userNextMove.Value;
+        }
+
+        private bool checkForExitKeyInput(string i_UserInput)
+        {
+            string exitKey = "Q";
+
+            if (string.Compare(i_UserInput, exitKey) == 0)
+            {
+                m_PressedQ = true;
+            }
+
+            return m_PressedQ;
         }
 
         public KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)
@@ -107,62 +128,7 @@ namespace UserInterface
         private void PrintBoard()
         {
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine(BoardToString());
-        }
-
-        private string BoardToString()
-        {
-            StringBuilder boardInString = new StringBuilder();
-            string horizontalEqualsLine = createEqualsLine(m_Game.Board.Size);
-
-            boardInString.Append(" ");
-
-            for (char c = 'A'; c < m_Game.Board.Size + 'A'; c++)
-            {
-                boardInString.Append(string.Format("  {0} ", c));
-            }
-
-            boardInString.Append(Environment.NewLine);
-
-            for (int i = 0; i < m_Game.Board.Size; i++)
-            {
-                boardInString.Append(horizontalEqualsLine);
-                boardInString.Append(string.Format("{0}", (char)(i + 'a')));
-
-                for (int j = 0; j < m_Game.Board.Size; j++)
-                {
-                    if (m_Game.Board[i, j] == null)
-                    {
-                        boardInString.Append("| " + " " + " ");
-
-                    }
-                    else
-                    {
-                        boardInString.Append("| " + (char)m_Game.Board[i, j].ToolSign + " ");
-                    }
-                }
-
-                boardInString.Append("|");
-                boardInString.Append(Environment.NewLine);
-            }
-
-            boardInString.Append(horizontalEqualsLine);
-            return boardInString.ToString();
-        }
-
-        private string createEqualsLine(int i_Size)
-        {
-            StringBuilder equalLine = new StringBuilder();
-
-            equalLine.Append(" ");
-
-            for (int j = 0; j < i_Size; j++)
-            {
-                equalLine.Append("====");
-            }
-
-            equalLine.Append("=" + Environment.NewLine);
-            return equalLine.ToString();
+            Console.WriteLine(m_Game.BoardToString());
         }
     }
 }

@@ -167,6 +167,11 @@ namespace Checkers
             m_Winner = i_Winner;
         }
 
+        public string BoardToString()
+        {
+            return m_Board.ToString();
+        }
+
 
 
 

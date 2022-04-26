@@ -1,4 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 
 namespace Checkers
 {
@@ -136,6 +140,61 @@ namespace Checkers
         public bool IsOpponentInSquare(Point i_SquareLocation, GameTool.eTeamSign i_ToolTeam)
         {
             return !IsSquareEmpty(i_SquareLocation) && m_GameBoard[i_SquareLocation.Y, i_SquareLocation.X].TeamSign != i_ToolTeam;
+        }
+
+        public string ToString()
+        {
+            StringBuilder boardInString = new StringBuilder();
+            string horizontalEqualsLine = createEqualsLine(m_Size);
+
+            boardInString.Append(" ");
+
+            for (char c = 'A'; c < m_Size + 'A'; c++)
+            {
+                boardInString.Append(string.Format("  {0} ", c));
+            }
+
+            boardInString.Append(Environment.NewLine);
+
+            for (int i = 0; i < m_Size; i++)
+            {
+                boardInString.Append(horizontalEqualsLine);
+                boardInString.Append(string.Format("{0}", (char)(i + 'a')));
+
+                for (int j = 0; j < m_Size; j++)
+                {
+                    if (m_GameBoard[i, j] == null)
+                    {
+                        boardInString.Append("| " + " " + " ");
+
+                    }
+                    else
+                    {
+                        boardInString.Append("| " + (char)m_GameBoard[i, j].ToolSign + " ");
+                    }
+                }
+
+                boardInString.Append("|");
+                boardInString.Append(Environment.NewLine);
+            }
+
+            boardInString.Append(horizontalEqualsLine);
+            return boardInString.ToString();
+        }
+
+        private string createEqualsLine(int i_Size)
+        {
+            StringBuilder equalLine = new StringBuilder();
+
+            equalLine.Append(" ");
+
+            for (int j = 0; j < i_Size; j++)
+            {
+                equalLine.Append("====");
+            }
+
+            equalLine.Append("=" + Environment.NewLine);
+            return equalLine.ToString();
         }
 
         //public void Clear()/// Dont know if we need it
