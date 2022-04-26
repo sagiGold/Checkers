@@ -163,10 +163,15 @@ namespace Checkers
             m_Winner = i_Winner;
         }
 
+        public string BoardToString()
+        {
+            return m_Board.ToString();
+        }
+
         public Move GetComputerMove()
         {
             Random random = new Random();
-
+          
             return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
         }
 
