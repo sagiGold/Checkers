@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 
 namespace Checkers
 {
@@ -61,6 +63,19 @@ namespace Checkers
             bool isEqual = m_CurrentPoint == i_Move.m_CurrentPoint && m_MoveTo == i_Move.m_MoveTo && m_EatMove == i_Move.m_EatMove;
 
             return isEqual;
+        }
+
+        public string ToString()
+        {
+            StringBuilder moveInString = new StringBuilder();
+
+            moveInString.Append(string.Format("{0}", (char)(m_CurrentPoint.X + 'A')));
+            moveInString.Append(string.Format("{0}", (char)(m_CurrentPoint.Y + 'a')));
+            moveInString.Append(">");
+            moveInString.Append(string.Format("{0}", (char)(m_MoveTo.X + 'A')));
+            moveInString.Append(string.Format("{0}", (char)(m_MoveTo.Y + 'a')));
+
+            return moveInString.ToString();
         }
     }
 }

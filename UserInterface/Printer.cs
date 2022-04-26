@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UserInterface
 {
-    public class PrintMessage
+    public class Printer
     {
         public static void GameIntro()
         {
@@ -58,14 +58,22 @@ namespace UserInterface
             System.Threading.Thread.Sleep(4000);
         }
 
-        public static void QuitGameMsg(Checkers.Game m_Game)
+        public static void QuitGameMsg(Checkers.Game i_Game)
         {
-            Console.WriteLine(Checkers.GameMessages.QuitGameMsg(m_Game));
+            Console.WriteLine(Checkers.GameMessages.QuitGameMsg(i_Game));
         }
 
-        public static void StatusMsg(Checkers.Game m_Game)
+        public static void StatusMsg(Checkers.Game i_Game)
         {
-            Console.WriteLine(Checkers.GameMessages.StatusMsg(m_Game));
+            Console.WriteLine(Checkers.GameMessages.StatusMsg(i_Game));
+        }
+
+        public static void PrintBoard(Checkers.Game i_Game)
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine(i_Game.BoardToString());
+            PrintPlayersData(i_Game); // dani's last turn : Aa> Bb
+                                              // sagi's turn: 
         }
     }
 }

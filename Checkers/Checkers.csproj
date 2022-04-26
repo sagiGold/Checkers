@@ -39,7 +39,6 @@
     <Compile Include="GameMessages.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

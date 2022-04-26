@@ -145,6 +145,7 @@ namespace Checkers
         public void ExecutePlayerMove(Move i_Move)
         {
             i_Move.MakeMove(m_Board, m_OpponentPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
+            m_CurrentPlayer.LastMove = i_Move.ToString();
         }
 
         public bool CheckForDoubleStrike(bool i_LastMoveEat)

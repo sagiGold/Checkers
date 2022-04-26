@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 using Checkers;
 
 
 namespace UserInterface
 {
-    public class MainMenu
+    public class InputChecker
     {
         public static void GetPreGameData(Game io_Game)
         {
-            PrintMessage.GameIntro();
+            Printer.GameIntro();
             GetNameFromUser(io_Game);
             io_Game.SwapPlayers();
             GetBoardSizeFromUser(io_Game);
@@ -20,40 +22,40 @@ namespace UserInterface
 
         private static void GetNameFromUser(Game io_Game)
         {
-            PrintMessage.NameMsg();
+            Printer.NameMsg();
             string firstName = Console.ReadLine();
 
             while (!io_Game.InitPlayer(firstName))
             {
-                PrintMessage.WrongInputMsg();
-                PrintMessage.NameMsg();
+                Printer.WrongInputMsg();
+                Printer.NameMsg();
                 firstName = Console.ReadLine();
             }
         }
 
         private static void GetBoardSizeFromUser(Game io_Game)
         {
-            PrintMessage.BoardSizeMsg();
+            Printer.BoardSizeMsg();
             string boardSize = Console.ReadLine();
 
             while (!io_Game.InitBoard(boardSize))
             {
-                PrintMessage.WrongInputMsg();
-                PrintMessage.BoardSizeMsg();
+                Printer.WrongInputMsg();
+                Printer.BoardSizeMsg();
                 boardSize = Console.ReadLine();
             }
         }
 
         private static void GetOpponent(Game io_Game)
         {
-            PrintMessage.ChooseOpponentMsg();
+            Printer.ChooseOpponentMsg();
             string userInput = Console.ReadLine();
             string playerType = null;
 
             while (!io_Game.CheckOpponentType(userInput, ref playerType))
             {
-                PrintMessage.WrongInputMsg();
-                PrintMessage.ChooseOpponentMsg();
+                Printer.WrongInputMsg();
+                Printer.ChooseOpponentMsg();
                 userInput = Console.ReadLine();
             }
 
@@ -71,15 +73,15 @@ namespace UserInterface
         }
         public static bool userWantsToPlay()
         {
-            PrintMessage.KeepPlayingMsg();
+            Printer.KeepPlayingMsg();
             string userChoice = Console.ReadLine();
             int userChoiceConverted;
 
             while ((!int.TryParse(userChoice, out userChoiceConverted)) ||
                 (userChoiceConverted != 2 && userChoiceConverted != 1))
             {
-                PrintMessage.WrongInputMsg();
-                PrintMessage.KeepPlayingMsg();
+                Printer.WrongInputMsg();
+                Printer.KeepPlayingMsg();
                 userChoice = Console.ReadLine();
             }
 
