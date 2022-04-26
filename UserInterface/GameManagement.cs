@@ -9,7 +9,7 @@ namespace UserInterface
 {
     public class GameManagement
     {
-        private Game m_Game = new Game();
+        private GameLogic m_Game = new GameLogic();
         bool m_PressedQ; //option for nullable
 
         public bool PressedQ

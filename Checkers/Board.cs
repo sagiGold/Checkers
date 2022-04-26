@@ -9,8 +9,6 @@ namespace Checkers
     public class Board
     {
         private const GameTool k_Empty = null;
-        private readonly GameTool[,] m_GameBoard;
-        private int m_Size;
 
         public enum eBoardSize
         {
@@ -19,13 +17,8 @@ namespace Checkers
             Large = 10,
         }
 
-        //public Board(int i_BoardSize, Player io_PlayerOne, Player io_PlayerTwo)
-        //{
-        //    m_Height = i_BoardSize;
-        //    m_Width = i_BoardSize;
-        //    m_GameBoard = new GameTool[i_BoardSize, i_BoardSize];
-        //    InitialBoardForNewGame(io_PlayerOne, io_PlayerTwo);
-        //}
+        private readonly GameTool[,] m_GameBoard;
+        private int m_Size;
 
         public Board(int i_BoardSize)
         {
@@ -43,19 +36,6 @@ namespace Checkers
             set
             {
                 m_GameBoard[i_Row, i_Colum] = value;
-            }
-        }
-
-        public int Size
-        {
-            get
-            {
-                return m_Size;
-            }
-
-            set
-            {
-                m_Size = value;
             }
         }
 
@@ -196,17 +176,6 @@ namespace Checkers
             equalLine.Append("=" + Environment.NewLine);
             return equalLine.ToString();
         }
-
-        //public void Clear()/// Dont know if we need it
-        //{
-        //    for (int i = 0; i < Height; i++)
-        //    {
-        //        for (int j = 0; j < Width; j++)
-        //        {
-        //            this[i, j] = k_Empty;
-        //        }
-        //    }
-        //}
 
         public static bool ValidSize(string i_BoardSize, out int o_ValidBoardSize)
         {

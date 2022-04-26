@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Checkers
 {
-    public class Game
+    public class GameLogic
     {
         private Board m_Board = null;
         private Player m_CurrentPlayer = null;
         private Player m_OpponentPlayer = null;
         private Player m_Winner = null;
-        private int m_CurrentMatchWinnerScore;
+        private int? m_CurrentMatchWinnerScore = null;
 
         public Board Board
         {
@@ -49,30 +49,9 @@ namespace Checkers
         {
             get
             {
-                return m_CurrentMatchWinnerScore;
+                // check?
+                return m_CurrentMatchWinnerScore.Value;
             }
-        }
-
-        public bool IsComputerTurn()
-        {
-            return m_CurrentPlayer.IsComputer();
-        }
-
-        public bool IsAvailabeMove(Move i_Move)
-        {
-            bool isAvailabe = false;
-
-            foreach (Move move in m_CurrentPlayer.ValidMoves)
-            {
-                if (move.Equals(i_Move))
-                {
-                    isAvailabe = true;
-                    break;
-                }
-            }
-
-            return isAvailabe;
-           // return m_CurrentPlayer.ValidMoves.Contains(i_Move);
         }
 
         public bool InitPlayer(string i_Name)
@@ -101,7 +80,7 @@ namespace Checkers
             return updated;
         }
 
-        public bool CheckOpponentType(string i_UserInput, ref string io_PlayerType )
+        public bool CheckOpponentType(string i_UserInput, ref string io_PlayerType)
         {
             Player.ePlayerType humanOrComputer;
             bool updated = false;
@@ -112,6 +91,22 @@ namespace Checkers
             }
 
             return updated;
+        }
+
+        public bool IsAvailabeMove(Move i_Move)
+        {
+            bool isAvailabe = false;
+
+            foreach (Move move in m_CurrentPlayer.ValidMoves)
+            {
+                if (move.Equals(i_Move))
+                {
+                    isAvailabe = true;
+                    break;
+                }
+            }
+
+            return isAvailabe;
         }
 
         public void BulidMoveList()
@@ -132,6 +127,36 @@ namespace Checkers
             }
         }
 
+        public void ExecutePlayerMove(Move i_Move)
+        {
+            i_Move.MakeMove(m_Board, m_OpponentPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
+            m_CurrentPlayer.LastMove = i_Move.ToString();
+        }
+
+        public bool CheckForDoubleStrike(bool i_LastMoveEat)
+        {
+            return i_LastMoveEat && !(m_CurrentPlayer.ValidMoves.Count == 0);
+        }
+
+        public void SwapPlayers()
+        {
+            Player tempPlayer = m_CurrentPlayer;
+            m_CurrentPlayer = m_OpponentPlayer;
+            m_OpponentPlayer = tempPlayer;
+        }
+
+        public bool IsGameOver()
+        {
+            bool isGameOver = false;
+
+            if (m_CurrentPlayer.ValidMoves.Count == 0)
+            {
+                updateWinnerScore(m_OpponentPlayer, m_CurrentPlayer);
+                isGameOver = true;
+            }
+
+            return isGameOver;
+        }
         public void ResetGame()
         {
             if (m_CurrentPlayer.Team == GameTool.eTeamSign.PlayerO)
@@ -145,38 +170,7 @@ namespace Checkers
             m_CurrentMatchWinnerScore = 0;
         }
 
-        public void SwapPlayers()
-        {
-            Player tempPlayer = m_CurrentPlayer;
-            m_CurrentPlayer = m_OpponentPlayer;
-            m_OpponentPlayer = tempPlayer;
-        }
-
-        public void ExecutePlayerMove(Move i_Move)
-        {
-            i_Move.MakeMove(m_Board, m_OpponentPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
-            m_CurrentPlayer.LastMove = i_Move.ToString();
-        }
-
-        public bool CheckForDoubleStrike(bool i_LastMoveEat)
-        {
-            return i_LastMoveEat && !(m_CurrentPlayer.ValidMoves.Count == 0);
-        }
-
-        public bool IsGameOver()
-        {
-            bool isGameOver = false;
-
-            if (m_CurrentPlayer.ValidMoves.Count == 0)
-            {
-                updateWinnerData(m_OpponentPlayer, m_CurrentPlayer);
-                isGameOver = true;
-            }
-
-            return isGameOver;
-        }
-
-        private void updateWinnerData(Player i_Winner, Player i_Loser)
+        private void updateWinnerScore(Player i_Winner, Player i_Loser)
         {
             int winnerToolCount = 0;
             int loserToolCount = 0;
@@ -190,21 +184,16 @@ namespace Checkers
             {
                 loserToolCount += (int)tool.Rank;
             }
-
+            // check nullable
             m_CurrentMatchWinnerScore = Math.Abs(winnerToolCount - loserToolCount);
-            i_Winner.Score += m_CurrentMatchWinnerScore;
+            i_Winner.Score += m_CurrentMatchWinnerScore.Value;
             m_Winner = i_Winner;
-        }
-
-        public string BoardToString()
-        {
-            return m_Board.ToString();
         }
 
         public Move GetComputerMove()
         {
             Random random = new Random();
-          
+            
             return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
         }
 
@@ -213,16 +202,14 @@ namespace Checkers
             m_CurrentPlayer.Score -= 3;
         }
 
-        //public bool PlayerTurn(Move i_CurrentMove)
-        //{
-        //    bool playerPlayed = false;
+        public bool IsComputerTurn()
+        {
+            return m_CurrentPlayer.IsComputer();
+        }
 
-        //    if (playerPlayed = i_CurrentMove.IsAvailabeMove(m_CurrentPlayer))
-        //    {
-        //        i_CurrentMove.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
-        //    }
-
-        //    return playerPlayed;
-        //}
+        public string BoardToString()
+        {
+            return m_Board.ToString();
+        }
     }
 }

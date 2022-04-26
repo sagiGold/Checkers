@@ -46,7 +46,7 @@ for 10X10 please press 10.";
             return "Please enter your next move";
         }
 
-        public static string WinningMsg(Game i_Game)
+        public static string WinningMsg(GameLogic i_Game)
         {
             return $"{i_Game.Winner.Name} wins with {i_Game.CurrentWinnerScore} points, Congrats !!!";
         }
@@ -70,12 +70,12 @@ for 10X10 please press 10.";
             return "Bye Bye :)";
         }
 
-        public static string QuitGameMsg(Game m_Game)
+        public static string QuitGameMsg(GameLogic m_Game)
         {
             return $"{m_Game.CurrentPlayer.Name} quit the match and got 3 points penalty";
         }
 
-        public static string StatusMsg(Game m_Game)
+        public static string StatusMsg(GameLogic m_Game)
         {
             string msg = string.Format(@"{0} has {1} points.
 {2} has {3} points.{4}", m_Game.CurrentPlayer.Name, m_Game.CurrentPlayer.Score, 

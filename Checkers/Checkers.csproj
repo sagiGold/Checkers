@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="GameTool.cs" />
     <Compile Include="GameMessages.cs" />
     <Compile Include="Move.cs" />

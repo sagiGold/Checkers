@@ -10,7 +10,7 @@ namespace UserInterface
 {
     public class InputChecker
     {
-        public static void GetPreGameData(Game io_Game)
+        public static void GetPreGameData(GameLogic io_Game)
         {
             Printer.GameIntro();
             GetNameFromUser(io_Game);
@@ -20,7 +20,7 @@ namespace UserInterface
             io_Game.SwapPlayers();
         }
 
-        private static void GetNameFromUser(Game io_Game)
+        private static void GetNameFromUser(GameLogic io_Game)
         {
             Printer.NameMsg();
             string firstName = Console.ReadLine();
@@ -33,7 +33,7 @@ namespace UserInterface
             }
         }
 
-        private static void GetBoardSizeFromUser(Game io_Game)
+        private static void GetBoardSizeFromUser(GameLogic io_Game)
         {
             Printer.BoardSizeMsg();
             string boardSize = Console.ReadLine();
@@ -46,7 +46,7 @@ namespace UserInterface
             }
         }
 
-        private static void GetOpponent(Game io_Game)
+        private static void GetOpponent(GameLogic io_Game)
         {
             Printer.ChooseOpponentMsg();
             string userInput = Console.ReadLine();

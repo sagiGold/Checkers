@@ -37,7 +37,7 @@ namespace UserInterface
             Console.WriteLine(Checkers.GameMessages.GetMoveMsg());
         }
 
-        public static void WinningMsg(Checkers.Game i_Game)
+        public static void WinningMsg(Checkers.GameLogic i_Game)
         {
             Console.WriteLine(Checkers.GameMessages.WinningMsg(i_Game));
         }
@@ -58,22 +58,22 @@ namespace UserInterface
             System.Threading.Thread.Sleep(4000);
         }
 
-        public static void QuitGameMsg(Checkers.Game i_Game)
+        public static void QuitGameMsg(Checkers.GameLogic i_Game)
         {
             Console.WriteLine(Checkers.GameMessages.QuitGameMsg(i_Game));
         }
 
-        public static void StatusMsg(Checkers.Game i_Game)
+        public static void StatusMsg(Checkers.GameLogic i_Game)
         {
             Console.WriteLine(Checkers.GameMessages.StatusMsg(i_Game));
         }
 
-        public static void PrintBoard(Checkers.Game i_Game)
+        public static void PrintBoard(Checkers.GameLogic i_Game)
         {
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine(i_Game.BoardToString());
             PrintPlayersData(i_Game); // dani's last turn : Aa> Bb
-                                              // sagi's turn: 
+                                              // sagi's turn:
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 
 namespace Checkers
@@ -9,9 +8,9 @@ namespace Checkers
     public class Move
     {
         private const int k_Jump2Squares = 2;
+        private bool m_EatMove;
         private Point m_CurrentPoint;
         private Point m_MoveTo;
-        private bool m_EatMove;
 
         public Move(Point i_From, Point i_To)
         {
@@ -23,14 +22,6 @@ namespace Checkers
         public bool IsEatMove()
         {
             return m_EatMove;
-        }
-
-        private void switchToKing(GameTool io_Tool, Board i_GameBoard)
-        {
-            if (!io_Tool.IsKing() && i_GameBoard.ToolInEndLine(io_Tool))
-            {
-                io_Tool.MakeKing();
-            }
         }
 
         public void MakeMove(Board io_GameBoard, List<GameTool> io_OpponentTools, List<Move> io_PlayerMoves)
@@ -48,6 +39,14 @@ namespace Checkers
             }
 
             switchToKing(toolToMove, io_GameBoard);
+        }
+
+        private void switchToKing(GameTool io_Tool, Board i_GameBoard)
+        {
+            if (!io_Tool.IsKing() && i_GameBoard.ToolInEndLine(io_Tool))
+            {
+                io_Tool.MakeKing();
+            }
         }
 
         private void skipOverTheOpponentTool(Board io_GameBoard, List<GameTool> io_OpponentTools)
