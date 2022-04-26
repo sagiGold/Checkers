@@ -11,6 +11,7 @@ namespace Checkers
         private Player m_CurrentPlayer = null;
         private Player m_OpponentPlayer = null;
         private Player m_Winner = null;
+        private int m_CurrentMatchWinnerScore;
 
         public Board Board
         {
@@ -20,7 +21,7 @@ namespace Checkers
             }
         }
 
-        public Player Winner
+        internal Player Winner
         {
             get
             {
@@ -28,7 +29,7 @@ namespace Checkers
             }
         }
 
-        public Player CurrentPlayer
+        internal Player CurrentPlayer
         {
             get
             {
@@ -36,11 +37,19 @@ namespace Checkers
             }
         }
 
-        public Player OpponentPlayer
+        internal Player OpponentPlayer
         {
             get
             {
                 return m_OpponentPlayer;
+            }
+        }
+
+        internal int CurrentWinnerScore
+        {
+            get
+            {
+                return m_CurrentMatchWinnerScore;
             }
         }
 
@@ -133,6 +142,7 @@ namespace Checkers
             m_CurrentPlayer.ResetPlayerForNewGame();
             m_OpponentPlayer.ResetPlayerForNewGame();
             Board.InitializeBoard(m_CurrentPlayer, m_OpponentPlayer);
+            m_CurrentMatchWinnerScore = 0;
         }
 
         public void SwapPlayers()
@@ -181,7 +191,8 @@ namespace Checkers
                 loserToolCount += (int)tool.Rank;
             }
 
-            i_Winner.Score += Math.Abs(winnerToolCount - loserToolCount);
+            m_CurrentMatchWinnerScore = Math.Abs(winnerToolCount - loserToolCount);
+            i_Winner.Score += m_CurrentMatchWinnerScore;
             m_Winner = i_Winner;
         }
 

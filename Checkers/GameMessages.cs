@@ -48,7 +48,7 @@ for 10X10 please press 10.";
 
         public static string WinningMsg(Game i_Game)
         {
-            return $"{i_Game.Winner.Name} wins with {i_Game.Winner.Score} points, Congrats !!!";
+            return $"{i_Game.Winner.Name} wins with {i_Game.CurrentWinnerScore} points, Congrats !!!";
         }
 
         public static string DrawMsg()
