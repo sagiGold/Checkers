@@ -9,7 +9,7 @@ namespace Checkers
     {
         private const int m_MaxUserNameSize = 20;
 
-        public enum ePLayerType
+        public enum ePlayerType
         {
             Computer = 1,
             Human,
@@ -18,7 +18,7 @@ namespace Checkers
         private GameTool.eTeamSign m_Team;
         private string m_Name;
         private string m_LastMove = null;
-        private ePLayerType m_PlayerType;
+        private ePlayerType m_PlayerType;
         private List<GameTool> m_PlayerTools = new List<GameTool>();
         private List<Move> m_ValidMovesList = new List<Move>();
         private int m_Score = 0;
@@ -27,7 +27,7 @@ namespace Checkers
         {
             m_Name = i_PlayerName;
             m_Team = i_Team;
-            m_PlayerType = i_PlayerName == "Computer" ? ePLayerType.Computer : ePLayerType.Human;
+            m_PlayerType = i_PlayerName == "Computer" ? ePlayerType.Computer : ePlayerType.Human;
         }
 
         public int Score
@@ -82,7 +82,7 @@ namespace Checkers
             }
         }
 
-        public ePLayerType PlayerType
+        public ePlayerType PlayerType
         {
             get
             {
@@ -128,19 +128,24 @@ namespace Checkers
             return i_UserName.Length <= m_MaxUserNameSize && !nameContainSpaces;
         }
 
-        public static bool LegalPlayerType(string i_UserType, out ePLayerType o_PlayerType)
-        {
-            bool isPlayerType = false;
-
-            isPlayerType = ePLayerType.TryParse(i_UserType, out o_PlayerType);
-            return isPlayerType;
-        }
-
         public void ResetPlayerForNewGame()
         {
             m_LastMove = null;
             m_PlayerTools.Clear();
             m_ValidMovesList.Clear();
+        }
+
+        public static bool ValidPlayerType(string i_UserInput, out ePlayerType o_PlayerType)
+        {
+            bool isNumeric = false;
+
+            isNumeric = ePlayerType.TryParse(i_UserInput, out o_PlayerType);
+            return isNumeric && legalPlayerType(o_PlayerType);
+        }
+
+        private static bool legalPlayerType(ePlayerType i_ValidPlayerType)
+        {
+            return i_ValidPlayerType == ePlayerType.Computer || i_ValidPlayerType == ePlayerType.Human;
         }
     }
 }

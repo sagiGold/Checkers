@@ -25,12 +25,14 @@ namespace UserInterface
 
         public void RunSingleMatch()
         {
-            while (true/*!m_Game.IsGameOver() && !m_PressedQ*/)
+            m_Game.BulidMoveList();
+
+            while (!m_Game.IsGameOver() && !m_PressedQ)
             {
-                m_Game.BulidMoveList();
                 PlayerTurn();
                 m_Game.SwapPlayers();
-            }
+                m_Game.BulidMoveList();
+            } 
 
             handleGameOver();    
         }
@@ -54,7 +56,7 @@ namespace UserInterface
         {
             PrintBoard();
             Move nextMove = GetValidMove();
-            m_Game.ExecuteMove(nextMove);
+            m_Game.ExecutePlayerMove(nextMove);
 
             if (m_Game.CheckForDoubleStrike(nextMove.IsEatMove()))
             {
@@ -81,7 +83,7 @@ namespace UserInterface
 
         public KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)
         {
-            bool validInput = char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
+            bool validInput = i_Move.Length == 5 && char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
                 && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)
                 && i_Move[2] == '>';    // Input built as the following template : Aa>Bb
             Move newMove = null;

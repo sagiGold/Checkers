@@ -9,7 +9,7 @@ namespace Checkers
     {
         private Board m_Board = null;
         private Player m_CurrentPlayer = null;
-        private Player m_NextPlayer = null;
+        private Player m_OpponentPlayer = null;
         private Player m_Winner = null;
 
         public Board Board
@@ -56,7 +56,7 @@ namespace Checkers
 
             if (updated = Player.IsValidUserName(i_Name))
             {
-                GameTool.eTeamSign sign = m_NextPlayer == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
+                GameTool.eTeamSign sign = m_OpponentPlayer == null ? GameTool.eTeamSign.PlayerX : GameTool.eTeamSign.PlayerO;
                 m_CurrentPlayer = new Player(i_Name, sign);
             }
 
@@ -78,12 +78,12 @@ namespace Checkers
 
         public bool CheckOpponentType(string i_UserInput, ref string io_PlayerType )
         {
-            Player.ePLayerType humanOrComputer;
+            Player.ePlayerType humanOrComputer;
             bool updated = false;
 
-            if (updated = Player.ePLayerType.TryParse(i_UserInput, out humanOrComputer))
+            if (updated = Player.ValidPlayerType(i_UserInput, out humanOrComputer))
             {
-                io_PlayerType = humanOrComputer == Player.ePLayerType.Human ? "Human" : "Computer";
+                io_PlayerType = humanOrComputer == Player.ePlayerType.Human ? "Human" : "Computer";
             }
 
             return updated;
@@ -110,20 +110,20 @@ namespace Checkers
         public void ResetGame()
         {
             m_CurrentPlayer.ResetPlayerForNewGame();
-            m_NextPlayer.ResetPlayerForNewGame();
-            Board.InitializeBoard(m_CurrentPlayer, m_NextPlayer);
+            m_OpponentPlayer.ResetPlayerForNewGame();
+            Board.InitializeBoard(m_CurrentPlayer, m_OpponentPlayer);
         }
 
         public void SwapPlayers()
         {
             Player tempPlayer = m_CurrentPlayer;
-            m_CurrentPlayer = m_NextPlayer;
-            m_NextPlayer = tempPlayer;
+            m_CurrentPlayer = m_OpponentPlayer;
+            m_OpponentPlayer = tempPlayer;
         }
 
-        public void ExecuteMove(Move i_Move)
+        public void ExecutePlayerMove(Move i_Move)
         {
-            i_Move.MakeMove(m_Board, m_NextPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
+            i_Move.MakeMove(m_Board, m_OpponentPlayer.PlayerTools, m_CurrentPlayer.ValidMoves);
         }
 
         public bool CheckForDoubleStrike(bool i_LastMoveEat)
@@ -137,9 +137,9 @@ namespace Checkers
 
             if (m_CurrentPlayer.ValidMoves.Count == 0)
             {
-                if (m_NextPlayer.ValidMoves.Count != 0)
+                if (m_OpponentPlayer.ValidMoves.Count != 0)
                 {
-                updateWinnerData(m_NextPlayer, m_CurrentPlayer);
+                updateWinnerData(m_OpponentPlayer, m_CurrentPlayer);
                 }
 
                 isGameOver = true;

@@ -54,7 +54,7 @@ namespace UserInterface
             {
                 Console.WriteLine(GameMessages.WrongInputMsg());
                 Console.WriteLine(GameMessages.ChooseOpponentMsg());
-                playerType = Console.ReadLine();
+                userInput = Console.ReadLine();
             }
 
             bool isComputer = playerType == "Computer";
