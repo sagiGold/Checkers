@@ -28,6 +28,22 @@ namespace Checkers
             }
         }
 
+        public Player CurrentPlayer
+        {
+            get
+            {
+                return m_Winner;
+            }
+        }
+
+        public Player OpponentPlayer
+        {
+            get
+            {
+                return m_Winner;
+            }
+        }
+
         public bool IsComputerTurn()
         {
             return m_CurrentPlayer.IsComputer();
@@ -173,6 +189,11 @@ namespace Checkers
             Random random = new Random();
           
             return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
+        }
+
+        public void CurrentPlayerQuitMatch()
+        {
+            m_CurrentPlayer.Score -= 3;
         }
 
         //public bool PlayerTurn(Move i_CurrentMove)

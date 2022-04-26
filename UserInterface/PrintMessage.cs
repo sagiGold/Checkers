@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UserInterface
 {
-    class PrintMessage
+    public class PrintMessage
     {
         public static void GameIntro()
         {
@@ -37,9 +37,9 @@ namespace UserInterface
             Console.WriteLine(Checkers.GameMessages.GetMoveMsg());
         }
 
-        public static void WinningMsg(Checkers.Player i_Winner)
+        public static void WinningMsg(Checkers.Game i_Game)
         {
-            Console.WriteLine(Checkers.GameMessages.WinningMsg(i_Winner));
+            Console.WriteLine(Checkers.GameMessages.WinningMsg(i_Game));
         }
 
         public static void DrawMsg()
@@ -53,7 +53,19 @@ namespace UserInterface
 
         public static void GoodByeMsg()
         {
+            Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine(Checkers.GameMessages.GoodByeMsg());
+            System.Threading.Thread.Sleep(4000);
+        }
+
+        public static void QuitGameMsg(Checkers.Game m_Game)
+        {
+            Console.WriteLine(Checkers.GameMessages.QuitGameMsg(m_Game));
+        }
+
+        public static void StatusMsg(Checkers.Game m_Game)
+        {
+            Console.WriteLine(Checkers.GameMessages.StatusMsg(m_Game));
         }
     }
 }
