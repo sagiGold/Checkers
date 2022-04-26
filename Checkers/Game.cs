@@ -109,6 +109,11 @@ namespace Checkers
 
         public void ResetGame()
         {
+            if (m_CurrentPlayer.Team == GameTool.eTeamSign.PlayerO)
+            {
+                SwapPlayers();
+            }
+
             m_CurrentPlayer.ResetPlayerForNewGame();
             m_OpponentPlayer.ResetPlayerForNewGame();
             Board.InitializeBoard(m_CurrentPlayer, m_OpponentPlayer);
