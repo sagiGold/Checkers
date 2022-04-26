@@ -25,7 +25,7 @@ namespace UserInterface
 
         public void RunSingleMatch()
         {
-            while (!m_Game.IsGameOver() && !m_PressedQ)
+            while (true/*!m_Game.IsGameOver() && !m_PressedQ*/)
             {
                 m_Game.BulidMoveList();
                 PlayerTurn();

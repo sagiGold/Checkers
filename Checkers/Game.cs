@@ -135,19 +135,14 @@ namespace Checkers
         {
             bool isGameOver = false;
 
-            if (m_CurrentPlayer.ValidMoves.Count != 0 && m_NextPlayer.ValidMoves.Count == 0)
+            if (m_CurrentPlayer.ValidMoves.Count == 0)
             {
-                updateWinnerData(m_CurrentPlayer, m_NextPlayer);
-                isGameOver = true;
-            }
-            else if (m_CurrentPlayer.ValidMoves.Count == 0 && m_NextPlayer.ValidMoves.Count != 0)
-            {
+                if (m_NextPlayer.ValidMoves.Count != 0)
+                {
                 updateWinnerData(m_NextPlayer, m_CurrentPlayer);
+                }
+
                 isGameOver = true;
-            }
-            else if (m_CurrentPlayer.ValidMoves.Count == 0 && m_NextPlayer.ValidMoves.Count == 0)
-            {
-                isGameOver = true; // Draw
             }
 
             return isGameOver;
@@ -168,15 +163,7 @@ namespace Checkers
                 loserToolCount += (int)tool.Rank;
             }
 
-            if (loserToolCount < winnerToolCount) 
-            {
-                i_Winner.Score += winnerToolCount - loserToolCount;
-            }
-            else // Our own bunus to player in case of winning and having smaller countdown
-            {
-                i_Winner.Score += 5;
-            }
-
+            i_Winner.Score += Math.Abs(winnerToolCount - loserToolCount);
             m_Winner = i_Winner;
         }
 
