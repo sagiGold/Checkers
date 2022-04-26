@@ -46,5 +46,14 @@ namespace UserInterface
         {
             Console.WriteLine(Checkers.GameMessages.DrawMsg());
         }
+        public static void KeepPlayingMsg()
+        {
+            Console.WriteLine(Checkers.GameMessages.KeepPlayingMsg());
+        }
+
+        public static void GoodByeMsg()
+        {
+            Console.WriteLine(Checkers.GameMessages.GoodByeMsg());
+        }
     }
 }

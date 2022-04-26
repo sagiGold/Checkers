@@ -16,12 +16,14 @@ namespace UserInterface
         {
             MainMenu.GetPreGameData(m_Game);
 
-            while (true /*keepPlaying*/)
+            do
             {
                 m_PressedQ = false;
                 m_Game.ResetGame();
                 RunSingleMatch();
-            }
+            } while (MainMenu.userWantsToPlay());
+
+            PrintMessage.GoodByeMsg();
         }
 
         public void RunSingleMatch()
@@ -40,6 +42,8 @@ namespace UserInterface
 
         private void handleGameOver()
         {
+            Ex02.ConsoleUtils.Screen.Clear();
+
             if (!m_PressedQ)
             {
                 if (m_Game.Winner != null)

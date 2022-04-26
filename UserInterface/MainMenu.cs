@@ -10,7 +10,7 @@ namespace UserInterface
     {
         public static void GetPreGameData(Game io_Game)
         {
-            Console.WriteLine(GameMessages.GameIntro());
+            PrintMessage.GameIntro();
             GetNameFromUser(io_Game);
             io_Game.SwapPlayers();
             GetBoardSizeFromUser(io_Game);
@@ -20,40 +20,40 @@ namespace UserInterface
 
         private static void GetNameFromUser(Game io_Game)
         {
-            Console.WriteLine(GameMessages.NameMsg());
+            PrintMessage.NameMsg();
             string firstName = Console.ReadLine();
 
             while (!io_Game.InitPlayer(firstName))
             {
-                Console.WriteLine(GameMessages.WrongInputMsg());
-                Console.WriteLine(GameMessages.NameMsg());
+                PrintMessage.WrongInputMsg();
+                PrintMessage.NameMsg();
                 firstName = Console.ReadLine();
             }
         }
 
         private static void GetBoardSizeFromUser(Game io_Game)
         {
-            Console.WriteLine(GameMessages.BoardSizeMsg());
+            PrintMessage.BoardSizeMsg();
             string boardSize = Console.ReadLine();
 
             while (!io_Game.InitBoard(boardSize))
             {
-                Console.WriteLine(GameMessages.WrongInputMsg());
-                Console.WriteLine(GameMessages.BoardSizeMsg());
+                PrintMessage.WrongInputMsg();
+                PrintMessage.BoardSizeMsg();
                 boardSize = Console.ReadLine();
             }
         }
 
         private static void GetOpponent(Game io_Game)
         {
-            Console.WriteLine(GameMessages.ChooseOpponentMsg());
+            PrintMessage.ChooseOpponentMsg();
             string userInput = Console.ReadLine();
             string playerType = null;
 
             while (!io_Game.CheckOpponentType(userInput, ref playerType))
             {
-                Console.WriteLine(GameMessages.WrongInputMsg());
-                Console.WriteLine(GameMessages.ChooseOpponentMsg());
+                PrintMessage.WrongInputMsg();
+                PrintMessage.ChooseOpponentMsg();
                 userInput = Console.ReadLine();
             }
 
@@ -68,6 +68,22 @@ namespace UserInterface
                 GetNameFromUser(io_Game);
             }
 
+        }
+        public static bool userWantsToPlay()
+        {
+            PrintMessage.KeepPlayingMsg();
+            string userChoice = Console.ReadLine();
+            int userChoiceConverted;
+
+            while ((!int.TryParse(userChoice, out userChoiceConverted)) ||
+                (userChoiceConverted != 2 && userChoiceConverted != 1))
+            {
+                PrintMessage.WrongInputMsg();
+                PrintMessage.KeepPlayingMsg();
+                userChoice = Console.ReadLine();
+            }
+
+            return userChoiceConverted == 1;
         }
     }
 }

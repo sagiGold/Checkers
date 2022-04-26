@@ -55,5 +55,18 @@ for 10X10 please press 10.";
         {
             return "It's a draw !";
         }
+        public static string KeepPlayingMsg()
+        {
+            string msg = @"Would you like to play another round ?:
+1. Yes.
+2. No.";
+
+            return msg;
+        }
+
+        public static string GoodByeMsg()
+        {
+            return "Bye Bye :)";
+        }
     }
 }
