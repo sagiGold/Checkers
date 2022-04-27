@@ -9,7 +9,7 @@ namespace Checkers
         {
             return "HELLO AND WELCOME TO CHECKERS, ENJOY!";
         }
-        
+
         public static string NameMsg()
         {
             return "Please enter your name (up to 20 characters without spaces):";
@@ -70,9 +70,8 @@ for 10X10 please press 10.";
 
         public static string StatusMsg(GameLogic i_Game)
         {
-            string msg = string.Format(@"{0} has {1} points.
-{2} has {3} points.{4}", i_Game.CurrentPlayer.Name, i_Game.CurrentPlayer.Score, 
-                i_Game.OpponentPlayer.Name, i_Game.OpponentPlayer.Score, Environment.NewLine);
+            string msg = string.Format(@"{0} has {1} points.{4}{2} has {3} points.{4}", i_Game.CurrentPlayer.Name, i_Game.CurrentPlayer.Score,
+                                      i_Game.OpponentPlayer.Name, i_Game.OpponentPlayer.Score, Environment.NewLine);
 
             return msg;
         }

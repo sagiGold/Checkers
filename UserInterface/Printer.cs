@@ -65,10 +65,10 @@ namespace UserInterface
         {
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine(i_Game.BoardToString());
-            PrintPlayersData(i_Game);
+            printPlayersTurnData(i_Game);
         }
 
-        private static void PrintPlayersData(GameLogic i_Game)
+        private static void printPlayersTurnData(GameLogic i_Game)
         {
             Console.WriteLine(GameMessages.PlayerTurnMsg(i_Game));
         }

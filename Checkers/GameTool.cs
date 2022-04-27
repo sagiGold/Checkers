@@ -1,14 +1,13 @@
-﻿using System.Drawing;
 ﻿using System.Collections.Generic;
 
-﻿namespace Checkers
+namespace Checkers
 {
     public class GameTool
     {
         public enum eTeamSign
         {
             PlayerO = 'O',
-            PlayerX = 'X'
+            PlayerX = 'X',
         }
 
         public enum eToolValue
@@ -22,7 +21,7 @@
             ToolO = 'O',
             ToolX = 'X',
             ToolOKing = 'U',
-            ToolXKing = 'K'
+            ToolXKing = 'K',
         }
 
         public enum eDirection
@@ -109,18 +108,6 @@
             m_ToolSign = m_TeamSign == eTeamSign.PlayerX ? eToolSign.ToolXKing : eToolSign.ToolOKing;
         }
 
-       /* public void isda(Board i_GameBoard, List<Move> io_PlayerValidMoves, System.Func<Board, List<Move>, eDirection, int> myFunc)
-        {
-            eDirection toolDirection = getToolDirection();
-
-            myFunc(i_GameBoard, io_PlayerValidMoves, toolDirection);
-            if (IsKing())
-            {
-                toolDirection = toolDirection == eDirection.Up ? eDirection.Down : eDirection.Up;
-                myFunc(i_GameBoard, io_PlayerValidMoves, toolDirection);
-            }
-        }*/
-
         public eDirection GetToolDirection()
         {
             return m_TeamSign == eTeamSign.PlayerX ? eDirection.Up : eDirection.Down;
@@ -153,6 +140,7 @@
         private void addOneDirectionValidMoves(Board i_GameBoard, List<Move> io_PlayerValidMoves, eDirection i_ToolDirection)
         {
             Point newPoint = new Point(m_Location.X + (int)eDirection.Left, m_Location.Y + (int)i_ToolDirection);
+
             if (checkIfValidMove(newPoint, i_GameBoard))
             {
                 io_PlayerValidMoves.Add(new Move(m_Location, newPoint));

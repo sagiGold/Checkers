@@ -9,14 +9,14 @@ namespace UserInterface
         public static void GetPreGameData(GameLogic io_Game)
         {
             Printer.GameIntro();
-            GetNameFromUser(io_Game);
+            getNameFromUser(io_Game);
             io_Game.SwapPlayers();
-            GetBoardSizeFromUser(io_Game);
-            GetOpponent(io_Game);
+            getBoardSizeFromUser(io_Game);
+            getOpponent(io_Game);
             io_Game.SwapPlayers();
         }
 
-        private static void GetNameFromUser(GameLogic io_Game)
+        private static void getNameFromUser(GameLogic io_Game)
         {
             Printer.NameMsg();
             StringBuilder firstName = new StringBuilder(Console.ReadLine());
@@ -30,7 +30,7 @@ namespace UserInterface
             }
         }
 
-        private static void GetBoardSizeFromUser(GameLogic io_Game)
+        private static void getBoardSizeFromUser(GameLogic io_Game)
         {
             Printer.BoardSizeMsg();
             StringBuilder boardSize = new StringBuilder(Console.ReadLine());
@@ -44,7 +44,7 @@ namespace UserInterface
             }
         }
 
-        private static void GetOpponent(GameLogic io_Game)
+        private static void getOpponent(GameLogic io_Game)
         {
             Printer.ChooseOpponentMsg();
             StringBuilder userInput = new StringBuilder(Console.ReadLine());
@@ -66,18 +66,17 @@ namespace UserInterface
             }
             else 
             {
-                GetNameFromUser(io_Game);
+                getNameFromUser(io_Game);
             }
 
         }
-        public static bool userWantsToPlay()
+        public static bool UserWantsToPlay()
         {
             Printer.KeepPlayingMsg();
             StringBuilder userChoice = new StringBuilder(Console.ReadLine());
-            int userChoiceConverted;
+            int anotherRound;
 
-            while ((!int.TryParse(userChoice.ToString(), out userChoiceConverted)) ||
-                (userChoiceConverted != 2 && userChoiceConverted != 1))             // should not stay here we need to move it to function in the logic that returns bool
+            while (checkForAnotherRound(userChoice.ToString(), out anotherRound))
             {
                 Printer.WrongInputMsg();
                 Printer.KeepPlayingMsg();
@@ -85,7 +84,14 @@ namespace UserInterface
                 userChoice.Append(Console.ReadLine());
             }
 
-            return userChoiceConverted == 1;
+            return anotherRound == 1;
+        }
+
+        private static bool checkForAnotherRound(string i_UserChoice, out int o_AnotherRound)
+        {
+            int.TryParse(i_UserChoice, out o_AnotherRound);
+
+            return o_AnotherRound == 2 && o_AnotherRound == 1;
         }
     }
 }

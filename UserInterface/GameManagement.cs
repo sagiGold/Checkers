@@ -1,50 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Checkers;
 
 namespace UserInterface
 {
     public class GameManagement
     {
-        private GameLogic m_Game = new GameLogic();
-        bool m_PressedQ; //option for nullable
-
-        public bool PressedQ
-        {
-            set
-            {
-                m_PressedQ = value;
-            }
-            get
-            {
-                return m_PressedQ;
-            }
-        }
+        private readonly GameLogic r_Game = new GameLogic();
+        private bool m_PressedQ = false;
 
         public void Run()
         {
-            InputChecker.GetPreGameData(m_Game);
-
+            InputChecker.GetPreGameData(r_Game);
             do
             {
                 m_PressedQ = false;
-                m_Game.ResetGame();
+                r_Game.ResetGame();
                 RunSingleMatch();
-            } while (InputChecker.userWantsToPlay());
+            } while (InputChecker.UserWantsToPlay());
 
             Printer.GoodByeMsg();
         }
 
         public void RunSingleMatch()
         {
-            m_Game.BulidMoveList();
-
-            while (!m_Game.IsGameOver() && !m_PressedQ)
+            r_Game.BulidMoveList();
+            while (!r_Game.IsGameOver() && !m_PressedQ)
             {
                 PlayerTurn();
-                m_Game.SwapPlayers();
-                m_Game.BulidMoveList();
+                r_Game.SwapPlayers();
+                r_Game.BulidMoveList();
             } 
 
             handleGameOver();    
@@ -52,14 +37,14 @@ namespace UserInterface
 
         public void PlayerTurn()
         {
-            Printer.PrintBoard(m_Game);
-            Move nextMove = m_Game.IsComputerTurn() ? m_Game.GetComputerMove() : GetValidMove();
+            Printer.PrintBoard(r_Game);
+            Move nextMove = r_Game.IsComputerTurn() ? r_Game.GetComputerMove() : GetValidMove();
 
             if (!m_PressedQ)
             {
-                m_Game.ExecutePlayerMove(nextMove);
+                r_Game.ExecutePlayerMove(nextMove);
 
-                if (m_Game.CheckForDoubleStrike(nextMove.IsAnEatingStep()))
+                if (r_Game.CheckForDoubleStrike(nextMove.IsAnEatingStep()))
                 {
                     PlayerTurn();
                 }
@@ -71,8 +56,8 @@ namespace UserInterface
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
 
-            while ((!(userNextMove = tryDecodeUserInputToMove(moveInput)).Key ||
-                !m_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
+            while ((!(userNextMove = r_Game.TryDecodeUserInputToMove(moveInput)).Key ||
+                !r_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
             {
                 Printer.WrongInputMsg();
                 moveInput = Console.ReadLine();
@@ -84,41 +69,17 @@ namespace UserInterface
         private void handleGameOver()
         {
             Ex02.ConsoleUtils.Screen.Clear();
-
             if (m_PressedQ)
             {
-                m_Game.CurrentPlayerQuitMatch();
-                Printer.QuitGameMsg(m_Game);
+                r_Game.CurrentPlayerQuitMatch();
+                Printer.QuitGameMsg(r_Game);
             }
             else
             {
-                Printer.WinningMsg(m_Game);
+                Printer.WinningMsg(r_Game);
             }
 
-            Printer.StatusMsg(m_Game);
-        }
-
-        private KeyValuePair<bool, Move> tryDecodeUserInputToMove(string i_Move) // down from here ,maybe should move to logic
-        {
-            bool validInput = i_Move.Length == 5 && char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
-                && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)
-                && i_Move[2] == '>';    // Input built as the following template : Aa>Bb
-            Move newMove = null;
-
-            if (validInput)
-            {
-                newMove = decodeUserInputToMove(i_Move);
-            }
-
-            return new KeyValuePair<bool, Move>(validInput, newMove);
-        }
-
-        private Move decodeUserInputToMove(string i_Move)
-        {
-            Point moveFrom = new Point((i_Move[0] - 'A'), (i_Move[1] - 'a'));
-            Point moveTo = new Point((i_Move[3] - 'A'), (i_Move[4] - 'a'));
-
-            return new Move(moveFrom, moveTo);
+            Printer.StatusMsg(r_Game);
         }
 
         private bool checkForExitKeyInput(string i_UserInput)

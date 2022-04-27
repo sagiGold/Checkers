@@ -4,27 +4,26 @@ namespace Checkers
 {
     public class Player
     {
-        private const int m_MaxUserNameSize = 20;
-
         public enum ePlayerType
         {
             Computer = 1,
             Human,
         }
 
+        private const int k_MaxUserNameSize = 20;
+        private readonly string r_Name;
+        private readonly ePlayerType r_PlayerType;
+        private readonly GameTool.eTeamSign r_Team;
         private int m_Score = 0;
-        private string m_Name;
         private string m_LastMove;
-        private ePlayerType m_PlayerType;
-        private GameTool.eTeamSign m_Team;
         private List<GameTool> m_PlayerTools = new List<GameTool>();
         private List<Move> m_ValidMovesList = new List<Move>();
 
         public Player(string i_PlayerName, GameTool.eTeamSign i_Team)
         {
-            m_Name = i_PlayerName;
-            m_Team = i_Team;
-            m_PlayerType = i_PlayerName == "Computer" ? ePlayerType.Computer : ePlayerType.Human;
+            r_Name = i_PlayerName;
+            r_Team = i_Team;
+            r_PlayerType = i_PlayerName == "Computer" ? ePlayerType.Computer : ePlayerType.Human;
         }
 
         public int Score
@@ -44,12 +43,7 @@ namespace Checkers
         {
             get
             {
-                return m_Team;
-            }
-
-            set
-            {
-                m_Team = value;
+                return r_Team;
             }
         }
 
@@ -57,12 +51,7 @@ namespace Checkers
         {
             get
             {
-                return m_Name;
-            }
-
-            set
-            {
-                m_Name = value;
+                return r_Name;
             }
         }
 
@@ -85,11 +74,6 @@ namespace Checkers
             {
                 return m_PlayerTools;
             }
-
-            set
-            {
-                m_PlayerTools = value;
-            }
         }
 
         public List<Move> ValidMoves
@@ -98,25 +82,19 @@ namespace Checkers
             {
                 return m_ValidMovesList;
             }
-
-            set
-            {
-                m_ValidMovesList = value;
-            }
         }
 
         public static bool IsValidUserName(string i_UserName)
         {
             bool nameContainSpaces = i_UserName.Contains(" ");
 
-            return i_UserName.Length <= m_MaxUserNameSize && !nameContainSpaces;
+            return i_UserName.Length <= k_MaxUserNameSize && !nameContainSpaces;
         }
 
         public static bool ValidPlayerType(string i_UserInput, out ePlayerType o_PlayerType)
         {
-            bool isNumeric = false;
+            bool isNumeric = ePlayerType.TryParse(i_UserInput, out o_PlayerType);
 
-            isNumeric = ePlayerType.TryParse(i_UserInput, out o_PlayerType);
             return isNumeric && legalPlayerType(o_PlayerType);
         }
 
@@ -127,7 +105,7 @@ namespace Checkers
 
         public bool IsComputer()
         {
-            return m_PlayerType == ePlayerType.Computer;
+            return r_PlayerType == ePlayerType.Computer;
         }
 
         public void ResetPlayerForNewGame()
