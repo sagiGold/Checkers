@@ -138,6 +138,18 @@
             }
         }
 
+        public void CheckOppurturnitiToEat(Board i_GameBoard, List<Move> i_PlayerValidMoves)
+        {
+            eDirection toolDirection = GetToolDirection();
+
+            addOneDirectionValidEatMoves(i_GameBoard, i_PlayerValidMoves, toolDirection);
+            if (IsKing())
+            {
+                toolDirection = toolDirection == eDirection.Up ? eDirection.Down : eDirection.Up;
+                addOneDirectionValidEatMoves(i_GameBoard, i_PlayerValidMoves, toolDirection);
+            }
+        }
+
         private void addOneDirectionValidMoves(Board i_GameBoard, List<Move> io_PlayerValidMoves, eDirection i_ToolDirection)
         {
             Point newPoint = new Point(m_Location.X + (int)eDirection.Left, m_Location.Y + (int)i_ToolDirection);
@@ -161,18 +173,6 @@
         private bool checkIfOpponentInNextSquare(Point i_AfterMove, Board i_GameBoard)
         {
             return i_GameBoard.IsPointInBoard(i_AfterMove) && i_GameBoard.IsOpponentInSquare(i_AfterMove, m_TeamSign);
-        }
-
-        public void CheckOppurturnitiToEat(Board i_GameBoard, List<Move> i_PlayerValidMoves)
-        {
-            eDirection toolDirection = GetToolDirection();
-
-            addOneDirectionValidEatMoves(i_GameBoard, i_PlayerValidMoves, toolDirection);
-            if (IsKing())
-            {
-                toolDirection = toolDirection == eDirection.Up ? eDirection.Down : eDirection.Up;
-                addOneDirectionValidEatMoves(i_GameBoard, i_PlayerValidMoves, toolDirection);
-            }
         }
 
         private void addOneDirectionValidEatMoves(Board i_GameBoard, List<Move> io_PlayerValidMoves, eDirection i_ToolDirection)

@@ -59,11 +59,26 @@ namespace UserInterface
             {
                 m_Game.ExecutePlayerMove(nextMove);
 
-                if (m_Game.CheckForDoubleStrike(nextMove.IsEatMove()))
+                if (m_Game.CheckForDoubleStrike(nextMove.IsAnEatingStep()))
                 {
                     PlayerTurn();
                 }
             }
+        }
+
+        public Move GetValidMove()
+        {
+            string moveInput = Console.ReadLine();
+            KeyValuePair<bool, Move> userNextMove;
+
+            while ((!(userNextMove = tryDecodeUserInputToMove(moveInput)).Key ||
+                !m_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
+            {
+                Printer.WrongInputMsg();
+                moveInput = Console.ReadLine();
+            }
+
+            return userNextMove.Value;
         }
 
         private void handleGameOver()
@@ -82,22 +97,8 @@ namespace UserInterface
 
             Printer.StatusMsg(m_Game);
         }
-        public Move GetValidMove()
-        {
-            string moveInput = Console.ReadLine();
-            KeyValuePair<bool, Move> userNextMove;
 
-            while ((!(userNextMove = TryDecodeUserInputToMove(moveInput)).Key ||
-                !m_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
-            {
-                Printer.WrongInputMsg();
-                moveInput = Console.ReadLine();
-            }
-
-            return userNextMove.Value;
-        }
-
-        private KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)        // down from here ,maybe should move to logic
+        private KeyValuePair<bool, Move> tryDecodeUserInputToMove(string i_Move) // down from here ,maybe should move to logic
         {
             bool validInput = i_Move.Length == 5 && char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
                 && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)
@@ -106,13 +107,13 @@ namespace UserInterface
 
             if (validInput)
             {
-                newMove = DecodeUserInputToMove(i_Move);
+                newMove = decodeUserInputToMove(i_Move);
             }
 
             return new KeyValuePair<bool, Move>(validInput, newMove);
         }
 
-        private Move DecodeUserInputToMove(string i_Move)
+        private Move decodeUserInputToMove(string i_Move)
         {
             Point moveFrom = new Point((i_Move[0] - 'A'), (i_Move[1] - 'a'));
             Point moveTo = new Point((i_Move[3] - 'A'), (i_Move[4] - 'a'));

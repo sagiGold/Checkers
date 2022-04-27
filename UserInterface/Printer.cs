@@ -1,5 +1,5 @@
-﻿using Checkers;
-using System;
+﻿using System;
+using Checkers;
 
 namespace UserInterface
 {

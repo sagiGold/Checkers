@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using Checkers;
 
 namespace UserInterface
 {
@@ -10,7 +8,6 @@ namespace UserInterface
         {
             GameManagement game = new GameManagement();
             game.Run();
-
         }
     }
 }

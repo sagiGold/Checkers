@@ -39,57 +39,6 @@ namespace Checkers
             }
         }
 
-        public void InitializeBoard(Player io_Player1, Player io_Player2)
-        {
-            initializeBufferZone();
-            initializePlayersTools(io_Player1, io_Player2);
-        }
-
-        private void initializeBufferZone()
-        {
-            int startLoopIndex = (m_Size / 2) - 1;
-            int endLoopIndex = (m_Size / 2) + 1;
-
-            for (int i = startLoopIndex; i < endLoopIndex; i++)
-            {
-                for (int j = 0; j < m_Size; j++)
-                {
-                    m_GameBoard[i, j] = k_Empty;
-                }
-            }
-        }
-
-        private void initializePlayersTools(Player io_Player1, Player io_Player2)
-        {
-            int startLine = 0;
-            int endLine = (m_Size / 2) - 1;
-            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
-
-            startLine = (m_Size / 2) + 1;
-            endLine = m_Size;
-            arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
-        }
-
-        private void arrangePlayerToolsOnBoard(Player io_Player, int i_StartLine, int i_EndLine)
-        {
-            for (int i = i_StartLine; i < i_EndLine; i++)
-            {
-                for (int j = 0; j < m_Size; j++)
-                {
-                    if ((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0))
-                    {
-                        GameTool newMember = new GameTool(io_Player.Team, new Point(j, i));
-                        io_Player.PlayerTools.Add(newMember);
-                        m_GameBoard[i, j] = newMember;
-                    }
-                    else
-                    {
-                        m_GameBoard[i, j] = k_Empty;
-                    }
-                }
-            }
-        }
-
         public void AddToolToSquare(GameTool i_AddTool, Point i_NewLocation)
         {
             m_GameBoard[i_NewLocation.Y, i_NewLocation.X] = i_AddTool;
@@ -162,6 +111,70 @@ namespace Checkers
             return boardInString.ToString();
         }
 
+        public static bool ValidSize(string i_BoardSize, out int o_ValidBoardSize)
+        {
+            bool isNumeric = false;
+
+            isNumeric = int.TryParse(i_BoardSize, out o_ValidBoardSize);
+            return isNumeric && legalSize(o_ValidBoardSize);
+        }
+
+        public void InitializeBoard(Player io_Player1, Player io_Player2)
+        {
+            initializeBufferZone();
+            initializePlayersTools(io_Player1, io_Player2);
+        }
+
+        private void initializeBufferZone()
+        {
+            int startLoopIndex = (m_Size / 2) - 1;
+            int endLoopIndex = (m_Size / 2) + 1;
+
+            for (int i = startLoopIndex; i < endLoopIndex; i++)
+            {
+                for (int j = 0; j < m_Size; j++)
+                {
+                    m_GameBoard[i, j] = k_Empty;
+                }
+            }
+        }
+
+        private void initializePlayersTools(Player io_Player1, Player io_Player2)
+        {
+            int startLine = 0;
+            int endLine = (m_Size / 2) - 1;
+            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
+
+            startLine = (m_Size / 2) + 1;
+            endLine = m_Size;
+            arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
+        }
+
+        private static bool legalSize(int i_ValidSize)
+        {
+            return i_ValidSize == (int)eBoardSize.Small || i_ValidSize == (int)eBoardSize.Medium || i_ValidSize == (int)eBoardSize.Large;
+        }
+
+        private void arrangePlayerToolsOnBoard(Player io_Player, int i_StartLine, int i_EndLine)
+        {
+            for (int i = i_StartLine; i < i_EndLine; i++)
+            {
+                for (int j = 0; j < m_Size; j++)
+                {
+                    if ((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0))
+                    {
+                        GameTool newMember = new GameTool(io_Player.Team, new Point(j, i));
+                        io_Player.PlayerTools.Add(newMember);
+                        m_GameBoard[i, j] = newMember;
+                    }
+                    else
+                    {
+                        m_GameBoard[i, j] = k_Empty;
+                    }
+                }
+            }
+        }
+
         private string createEqualsLine(int i_Size)
         {
             StringBuilder equalLine = new StringBuilder();
@@ -175,19 +188,6 @@ namespace Checkers
 
             equalLine.Append("=" + Environment.NewLine);
             return equalLine.ToString();
-        }
-
-        public static bool ValidSize(string i_BoardSize, out int o_ValidBoardSize)
-        {
-            bool isNumeric = false;
-
-            isNumeric = int.TryParse(i_BoardSize, out o_ValidBoardSize);
-            return isNumeric && legalSize(o_ValidBoardSize);
-        }
-
-        private static bool legalSize(int i_ValidSize)
-        {
-            return i_ValidSize == (int)eBoardSize.Small || i_ValidSize == (int)eBoardSize.Medium || i_ValidSize == (int)eBoardSize.Large;
         }
     }
 }

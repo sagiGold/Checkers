@@ -19,7 +19,7 @@ namespace Checkers
             m_EatMove = Math.Abs(m_CurrentPoint.X - m_MoveTo.X) == k_Jump2Squares;
         }
 
-        public bool IsEatMove()
+        public bool IsAnEatingStep()
         {
             return m_EatMove;
         }
@@ -41,22 +41,6 @@ namespace Checkers
             switchToKing(toolToMove, io_GameBoard);
         }
 
-        private void switchToKing(GameTool io_Tool, Board i_GameBoard)
-        {
-            if (!io_Tool.IsKing() && i_GameBoard.ToolInEndLine(io_Tool))
-            {
-                io_Tool.MakeKing();
-            }
-        }
-
-        private void skipOverTheOpponentTool(Board io_GameBoard, List<GameTool> io_OpponentTools)
-        {
-            GameTool toolToDelete = io_GameBoard[(m_CurrentPoint.Y + m_MoveTo.Y) / 2, (m_CurrentPoint.X + m_MoveTo.X) / 2];
-
-            io_GameBoard.RemoveToolFromSquare(toolToDelete.Location);
-            io_OpponentTools.Remove(toolToDelete);
-        }
-
         public bool Equals(Move i_Move)
         {
             bool isEqual = m_CurrentPoint == i_Move.m_CurrentPoint && m_MoveTo == i_Move.m_MoveTo && m_EatMove == i_Move.m_EatMove;
@@ -75,6 +59,22 @@ namespace Checkers
             moveInString.Append(string.Format("{0}", (char)(m_MoveTo.Y + 'a')));
 
             return moveInString.ToString();
+        }
+
+        private void switchToKing(GameTool io_Tool, Board i_GameBoard)
+        {
+            if (!io_Tool.IsKing() && i_GameBoard.ToolInEndLine(io_Tool))
+            {
+                io_Tool.MakeKing();
+            }
+        }
+
+        private void skipOverTheOpponentTool(Board io_GameBoard, List<GameTool> io_OpponentTools)
+        {
+            GameTool toolToDelete = io_GameBoard[(m_CurrentPoint.Y + m_MoveTo.Y) / 2, (m_CurrentPoint.X + m_MoveTo.X) / 2];
+
+            io_GameBoard.RemoveToolFromSquare(toolToDelete.Location);
+            io_OpponentTools.Remove(toolToDelete);
         }
     }
 }

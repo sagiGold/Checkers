@@ -170,6 +170,30 @@ namespace Checkers
             m_CurrentMatchWinnerScore = 0;
         }
 
+        public Move GetComputerMove()
+        {
+            Random random = new Random();
+            
+            System.Threading.Thread.Sleep(2500);
+            return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
+        }
+
+        public void CurrentPlayerQuitMatch()
+        {
+            SwapPlayers();
+            m_CurrentPlayer.Score -= 3;
+        }
+
+        public bool IsComputerTurn()
+        {
+            return m_CurrentPlayer.IsComputer();
+        }
+
+        public string BoardToString()
+        {
+            return m_Board.ToString();
+        }
+
         private void updateWinnerScore(Player i_Winner, Player i_Loser)
         {
             int winnerToolCount = 0;
@@ -188,28 +212,6 @@ namespace Checkers
             m_CurrentMatchWinnerScore = Math.Abs(winnerToolCount - loserToolCount);
             i_Winner.Score += m_CurrentMatchWinnerScore.Value;
             m_Winner = i_Winner;
-        }
-
-        public Move GetComputerMove()
-        {
-            Random random = new Random();
-            
-            return m_CurrentPlayer.ValidMoves[random.Next(m_CurrentPlayer.ValidMoves.Count - 1)];
-        }
-
-        public void CurrentPlayerQuitMatch()
-        {
-            m_CurrentPlayer.Score -= 3;
-        }
-
-        public bool IsComputerTurn()
-        {
-            return m_CurrentPlayer.IsComputer();
-        }
-
-        public string BoardToString()
-        {
-            return m_Board.ToString();
         }
     }
 }
