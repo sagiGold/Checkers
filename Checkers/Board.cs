@@ -69,7 +69,7 @@ namespace Checkers
             return !IsSquareEmpty(i_SquareLocation) && m_GameBoard[i_SquareLocation.Y, i_SquareLocation.X].TeamSign != i_ToolTeam;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             StringBuilder boardInString = new StringBuilder();
             string horizontalEqualsLine = createEqualsLine(m_Size);
