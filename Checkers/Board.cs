@@ -75,19 +75,16 @@ namespace Checkers
             string horizontalEqualsLine = createEqualsLine(m_Size);
 
             boardInString.Append(" ");
-
             for (char c = 'A'; c < m_Size + 'A'; c++)
             {
                 boardInString.Append(string.Format("  {0} ", c));
             }
 
             boardInString.Append(Environment.NewLine);
-
             for (int i = 0; i < m_Size; i++)
             {
                 boardInString.Append(horizontalEqualsLine);
                 boardInString.Append(string.Format("{0}", (char)(i + 'a')));
-
                 for (int j = 0; j < m_Size; j++)
                 {
                     if (m_GameBoard[i, j] == null)
@@ -106,6 +103,7 @@ namespace Checkers
             }
 
             boardInString.Append(horizontalEqualsLine);
+
             return boardInString.ToString();
         }
 
@@ -114,6 +112,7 @@ namespace Checkers
             bool isNumeric = false;
 
             isNumeric = int.TryParse(i_BoardSize, out o_ValidBoardSize);
+
             return isNumeric && legalSize(o_ValidBoardSize);
         }
 
@@ -141,8 +140,8 @@ namespace Checkers
         {
             int startLine = 0;
             int endLine = (m_Size / 2) - 1;
-            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
 
+            arrangePlayerToolsOnBoard(io_Player2, startLine, endLine);
             startLine = (m_Size / 2) + 1;
             endLine = m_Size;
             arrangePlayerToolsOnBoard(io_Player1, startLine, endLine);
@@ -178,13 +177,13 @@ namespace Checkers
             StringBuilder equalLine = new StringBuilder();
 
             equalLine.Append(" ");
-
             for (int j = 0; j < i_Size; j++)
             {
                 equalLine.Append("====");
             }
 
             equalLine.Append("=" + Environment.NewLine);
+
             return equalLine.ToString();
         }
     }
