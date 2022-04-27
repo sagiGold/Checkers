@@ -51,11 +51,6 @@ namespace Checkers
             {
                 return m_TeamSign;
             }
-
-            set
-            {
-                m_TeamSign = value;
-            }
         }
 
         public eToolSign ToolSign
@@ -63,11 +58,6 @@ namespace Checkers
             get
             {
                 return m_ToolSign;
-            }
-
-            set
-            {
-                m_ToolSign = value;
             }
         }
 
@@ -89,11 +79,6 @@ namespace Checkers
             get
             {
                 return m_Rank;
-            }
-
-            set
-            {
-                m_Rank = value;
             }
         }
 
