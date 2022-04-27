@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using Checkers;
 
 namespace UserInterface
@@ -86,7 +84,6 @@ namespace UserInterface
         }
         public Move GetValidMove()
         {
-            Printer.GetMoveMsg();
             string moveInput = Console.ReadLine();
             KeyValuePair<bool, Move> userNextMove;
 
@@ -94,14 +91,13 @@ namespace UserInterface
                 !m_Game.IsAvailabeMove(userNextMove.Value)) && !checkForExitKeyInput(moveInput))
             {
                 Printer.WrongInputMsg();
-                Printer.GetMoveMsg();
                 moveInput = Console.ReadLine();
             }
 
             return userNextMove.Value;
         }
 
-        private KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)
+        private KeyValuePair<bool, Move> TryDecodeUserInputToMove(string i_Move)        // down from here ,maybe should move to logic
         {
             bool validInput = i_Move.Length == 5 && char.IsUpper(i_Move, 0) && char.IsUpper(i_Move, 3)
                 && char.IsLower(i_Move, 1) && char.IsLower(i_Move, 4)

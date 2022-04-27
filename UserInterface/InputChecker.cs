@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using Checkers;
+using System;
 using System.Text;
-using Checkers;
-
 
 namespace UserInterface
 {
@@ -23,40 +19,43 @@ namespace UserInterface
         private static void GetNameFromUser(GameLogic io_Game)
         {
             Printer.NameMsg();
-            string firstName = Console.ReadLine();
+            StringBuilder firstName = new StringBuilder(Console.ReadLine());
 
-            while (!io_Game.InitPlayer(firstName))
+            while (!io_Game.InitPlayer(firstName.ToString()))
             {
                 Printer.WrongInputMsg();
                 Printer.NameMsg();
-                firstName = Console.ReadLine();
+                firstName.Clear();
+                firstName.Append(Console.ReadLine());
             }
         }
 
         private static void GetBoardSizeFromUser(GameLogic io_Game)
         {
             Printer.BoardSizeMsg();
-            string boardSize = Console.ReadLine();
+            StringBuilder boardSize = new StringBuilder(Console.ReadLine());
 
-            while (!io_Game.InitBoard(boardSize))
+            while (!io_Game.InitBoard(boardSize.ToString()))
             {
                 Printer.WrongInputMsg();
                 Printer.BoardSizeMsg();
-                boardSize = Console.ReadLine();
+                boardSize.Clear();
+                boardSize.Append(Console.ReadLine());
             }
         }
 
         private static void GetOpponent(GameLogic io_Game)
         {
             Printer.ChooseOpponentMsg();
-            string userInput = Console.ReadLine();
+            StringBuilder userInput = new StringBuilder(Console.ReadLine());
             string playerType = null;
 
-            while (!io_Game.CheckOpponentType(userInput, ref playerType))
+            while (!io_Game.CheckOpponentType(userInput.ToString(), ref playerType))
             {
                 Printer.WrongInputMsg();
                 Printer.ChooseOpponentMsg();
-                userInput = Console.ReadLine();
+                userInput.Clear();
+                userInput.Append(Console.ReadLine());
             }
 
             bool isComputer = playerType == "Computer";
@@ -74,15 +73,16 @@ namespace UserInterface
         public static bool userWantsToPlay()
         {
             Printer.KeepPlayingMsg();
-            string userChoice = Console.ReadLine();
+            StringBuilder userChoice = new StringBuilder(Console.ReadLine());
             int userChoiceConverted;
 
-            while ((!int.TryParse(userChoice, out userChoiceConverted)) ||
-                (userChoiceConverted != 2 && userChoiceConverted != 1))
+            while ((!int.TryParse(userChoice.ToString(), out userChoiceConverted)) ||
+                (userChoiceConverted != 2 && userChoiceConverted != 1))             // should not stay here we need to move it to function in the logic that returns bool
             {
                 Printer.WrongInputMsg();
                 Printer.KeepPlayingMsg();
-                userChoice = Console.ReadLine();
+                userChoice.Clear();
+                userChoice.Append(Console.ReadLine());
             }
 
             return userChoiceConverted == 1;

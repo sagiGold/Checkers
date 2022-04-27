@@ -41,11 +41,6 @@ for 10X10 please press 10.";
             return "Wrong input, please try again";
         }
 
-        public static string GetMoveMsg()
-        {
-            return "Please enter your next move";
-        }
-
         public static string WinningMsg(GameLogic i_Game)
         {
             return $"{i_Game.Winner.Name} wins with {i_Game.CurrentWinnerScore} points, Congrats !!!";
@@ -70,19 +65,33 @@ for 10X10 please press 10.";
             return "Bye Bye :)";
         }
 
-        public static string QuitGameMsg(GameLogic m_Game)
+        public static string QuitGameMsg(GameLogic i_Game)
         {
-            return $"{m_Game.CurrentPlayer.Name} quit the match and got 3 points penalty";
+            return $"{i_Game.CurrentPlayer.Name} quit the match and got 3 points penalty";
         }
 
-        public static string StatusMsg(GameLogic m_Game)
+        public static string StatusMsg(GameLogic i_Game)
         {
             string msg = string.Format(@"{0} has {1} points.
-{2} has {3} points.{4}", m_Game.CurrentPlayer.Name, m_Game.CurrentPlayer.Score, 
-                m_Game.OpponentPlayer.Name, m_Game.OpponentPlayer.Score, Environment.NewLine);
+{2} has {3} points.{4}", i_Game.CurrentPlayer.Name, i_Game.CurrentPlayer.Score, 
+                i_Game.OpponentPlayer.Name, i_Game.OpponentPlayer.Score, Environment.NewLine);
 
             return msg;
         }
 
+        public static string PlayerTurnMsg(GameLogic i_Game)
+        {
+            StringBuilder msg = new StringBuilder();
+
+            if (i_Game.OpponentPlayer.LastMove != null)
+            {
+                msg.AppendFormat("{0}'s move was ({1}): {2}", i_Game.OpponentPlayer.Name, (char)i_Game.OpponentPlayer.Team, i_Game.OpponentPlayer.LastMove);
+                msg.Append(Environment.NewLine);
+            }
+
+            msg.AppendFormat("{0}'s turn ({1}): ", i_Game.CurrentPlayer.Name, (char)i_Game.CurrentPlayer.Team);
+
+            return msg.ToString();
+        }
     }
 }
