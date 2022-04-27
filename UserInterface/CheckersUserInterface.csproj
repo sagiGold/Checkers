@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameManagement.cs" />
-    <Compile Include="InputChecker.cs" />
+    <Compile Include="UIlogic.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>

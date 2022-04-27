@@ -11,13 +11,13 @@ namespace UserInterface
 
         public void Run()
         {
-            InputChecker.GetPreGameData(r_Game);
+            UILogic.GetPreGameData(r_Game);
             do
             {
                 m_PressedQ = false;
                 r_Game.ResetGame();
                 RunSingleMatch();
-            } while (InputChecker.UserWantsToPlay());
+            } while (UILogic.UserWantsToPlay());
 
             Printer.GoodByeMsg();
         }

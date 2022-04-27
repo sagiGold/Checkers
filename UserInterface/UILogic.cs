@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UserInterface
 {
-    public class InputChecker
+    public class UILogic
     {
         public static void GetPreGameData(GameLogic io_Game)
         {
